@@ -22,6 +22,8 @@ ALTER TABLE [Vynosy] ADD Castka AS VynosyJednotka*Mnozstvi
 GO
 
 
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[PrepravaNastaveniCisla]'))
+DROP TRIGGER [PrepravaNastaveniCisla]
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -48,7 +50,7 @@ BEGIN
 	-- BEGIN TRAN
 	-- INSERT INTO Preprava WITH (updlock) SELECT * FROM inserted
 	-- COMMIT
-	UPDATE Preprava SET Cislo=[Rok] + '-' + Right('000' + [ID],3) WHERE ID =(SELECT ID FROM inserted);
+	UPDATE Preprava SET Cislo=CAST([Rok] AS VARCHAR) + '-' + Right('000' + CAST([ID] AS VARCHAR),3) WHERE ID =(SELECT ID FROM inserted);
 
 END
 GO
