@@ -6016,7 +6016,7 @@ GO
 -- Description:	<Description,,>
 -- =============================================
 CREATE TRIGGER PrepravaSilNastaveniCisla 
-   ON  Preprava 
+   ON  PrepravaSil
    --INSTEAD OF INSERT
    FOR INSERT
 AS 
