@@ -6004,3 +6004,35 @@ GO
 
 
 
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[PrepravaSilNastaveniCisla]'))
+DROP TRIGGER [PrepravaSilNastaveniCisla]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE TRIGGER PrepravaSilNastaveniCisla 
+   ON  Preprava 
+   --INSTEAD OF INSERT
+   FOR INSERT
+AS 
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for trigger here
+
+	-- UPDATE inserted SET Cislo=[Rok] + '-' + Right('000' + [ID],3);
+
+	-- BEGIN TRAN
+	-- INSERT INTO Preprava WITH (updlock) SELECT * FROM inserted
+	-- COMMIT
+	UPDATE PrepravaSil SET Cislo=CAST([Rok] AS VARCHAR) + '-P' + Right('000' + CAST([ID] AS VARCHAR),3) WHERE ID =(SELECT ID FROM inserted);
+
+END
+GO
