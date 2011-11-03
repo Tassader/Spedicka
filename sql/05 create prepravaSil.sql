@@ -8,22 +8,22 @@ GO
 CREATE TABLE [PrepravaSil](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Cislo] [nvarchar](243) NULL,
-	[Rok] [int] NULL,
-	[Mesic] [int] NULL,
-	[Tyden] [smallint] NULL,
-	[Zakaznik] [int] NULL,
+	[Rok] [int] NOT NULL,
+	[Mesic] [int] NOT NULL,
+	[Tyden] [smallint] NOT NULL,
+	[Zakaznik] [int] NOT NULL,
 	[ZakaznickaRef] [nvarchar](255) NULL,
-	[Obchodnik] [int] NULL,
+	[Obchodnik] [int] NOT NULL,
 	[Disponent] [int] NULL,
-	[StavPrepravy] [int] NULL,
+	[StavPrepravy] [int] NOT NULL,
 	[Fakturovano] [bit] NULL,
 	[Poznamka] [nvarchar](50) NULL,
-	[Odesilatel] [int] NULL,
-	[Prijemce] [int] NULL,
-	[Smer] [nvarchar](10) NULL,
+	[Odesilatel] [int] NOT NULL,
+	[Prijemce] [int] NOT NULL,
+	[Smer] [nvarchar](10) NOT NULL,
 	[Incoterms] [int] NULL,
 	[IncotermsMisto] [nvarchar](255) NULL,
-	[DruhPrepravy] [int] NULL,
+	[DruhPrepravy] [int] NOT NULL,
 	[Zasilka] [nvarchar](50) NULL,
 	[POL] [nvarchar](50) NULL,
 	[ETS] [datetime] NULL,
@@ -2795,16 +2795,16 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_ConstraintText', @value=N'Tento záznam nelze kvùli omezením relace mezi tabulkami Obchodnik a Preprava pøidat, zmìnit ani odstranit.' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PrepravaSil', @level2type=N'CONSTRAINT',@level2name=N'PrepravaSil_FK07'
 GO
 
-ALTER TABLE [PrepravaSil] ADD  DEFAULT (datepart(year,CONVERT([datetime],CONVERT([varchar],getdate(),(1)),(1)))) FOR [Rok]
+ALTER TABLE [PrepravaSil] ADD CONSTRAINT [DF__Preprava__Rok] DEFAULT (datepart(year,CONVERT([datetime],CONVERT([varchar],getdate(),(1)),(1)))) FOR [Rok]
 GO
 
-ALTER TABLE [PrepravaSil] ADD  DEFAULT (datepart(month,CONVERT([datetime],CONVERT([varchar],getdate(),(1)),(1)))) FOR [Mesic]
+ALTER TABLE [PrepravaSil] ADD  CONSTRAINT [DF__Preprava__Mesic] DEFAULT (datepart(month,CONVERT([datetime],CONVERT([varchar],getdate(),(1)),(1)))) FOR [Mesic]
 GO
 
-ALTER TABLE [PrepravaSil] ADD  DEFAULT ((1)) FOR [StavPrepravy]
+ALTER TABLE [PrepravaSil] ADD  CONSTRAINT [DF__Preprava__StavPrepravy] DEFAULT ((1)) FOR [StavPrepravy]
 GO
 
-ALTER TABLE [PrepravaSil] ADD  DEFAULT ((0)) FOR [Fakturovano]
+ALTER TABLE [PrepravaSil] ADD  CONSTRAINT [DF__Preprava__Fakturovano] DEFAULT ((0)) FOR [Fakturovano]
 GO
 
 
@@ -4353,16 +4353,16 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_ConstraintText', @value=N'Tento záznam nelze kvùli omezením relace mezi tabulkami TypKontejneru a Kontejner pøidat, zmìnit ani odstranit.' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'KontejnerSil', @level2type=N'CONSTRAINT',@level2name=N'KontejnerSil_FK06'
 GO
 
-ALTER TABLE [KontejnerSil] ADD  DEFAULT ((0)) FOR [GrossWeight]
+ALTER TABLE [KontejnerSil] ADD  CONSTRAINT [DF__Kontejner__GrossWeight] DEFAULT ((0)) FOR [GrossWeight]
 GO
 
-ALTER TABLE [KontejnerSil] ADD  DEFAULT ((0)) FOR [VolumeWeight]
+ALTER TABLE [KontejnerSil] ADD  CONSTRAINT [DF__Kontejner__VolumeWeight] DEFAULT ((0)) FOR [VolumeWeight]
 GO
 
-ALTER TABLE [KontejnerSil] ADD  DEFAULT ((0)) FOR [LDM]
+ALTER TABLE [KontejnerSil] ADD  CONSTRAINT [DF__Kontejner__LDM] DEFAULT ((0)) FOR [LDM]
 GO
 
-ALTER TABLE [KontejnerSil] ADD  DEFAULT ((0)) FOR [CBM]
+ALTER TABLE [KontejnerSil] ADD  CONSTRAINT [DF__Kontejner__CBM] DEFAULT ((0)) FOR [CBM]
 GO
 
 
@@ -4390,13 +4390,13 @@ CREATE TABLE [NakladySil](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Dodavatel] [int] NULL,
 	[Sluzba] [int] NULL,
-	[NakladyJednotka] [real] NULL,
+	[NakladyJednotka] [real] NOT NULL,
 	[Mena] [nvarchar](10) NULL,
-	[Mnozstvi] [real] NULL,
+	[Mnozstvi] [real] NOT NULL,
 	[Preprava] [int] NULL,
 	[FakturaPrijata] [bit] NULL,
 	[upsize_ts] [timestamp] NULL,
-	[Castka]  AS ([NakladyJednotka]*[Mnozstvi]),
+	[Castka]  AS CAST(NakladyJednotka*Mnozstvi AS real),
  CONSTRAINT [aaaaaNakladySil_PK] PRIMARY KEY NONCLUSTERED 
 (
 	[ID] ASC
@@ -5212,13 +5212,13 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_ConstraintText', @value=N'Tento záznam nelze kvùli omezením relace mezi tabulkami Preprava a Naklady pøidat, zmìnit ani odstranit.' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'NakladySil', @level2type=N'CONSTRAINT',@level2name=N'NakladySil_FK02'
 GO
 
-ALTER TABLE [NakladySil] ADD  DEFAULT ((0)) FOR [NakladyJednotka]
-GO
+-- ALTER TABLE [NakladySil] ADD  DEFAULT ((0)) FOR [NakladyJednotka]
+-- GO
 
-ALTER TABLE [NakladySil] ADD  DEFAULT ((0)) FOR [Mnozstvi]
-GO
+-- ALTER TABLE [NakladySil] ADD  DEFAULT ((0)) FOR [Mnozstvi]
+-- GO
 
-ALTER TABLE [NakladySil] ADD  DEFAULT ((0)) FOR [FakturaPrijata]
+ALTER TABLE [NakladySil] ADD  CONSTRAINT [DF__NakladySil__FakturaPrijata] DEFAULT ((0)) FOR [FakturaPrijata]
 GO
 
 
@@ -5245,12 +5245,12 @@ CREATE TABLE [VynosySil](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Odberatel] [int] NULL,
 	[Sluzba] [int] NULL,
-	[VynosyJednotka] [real] NULL,
+	[VynosyJednotka] [real] NOT NULL,
 	[Mena] [nvarchar](10) NULL,
-	[Mnozstvi] [real] NULL,
+	[Mnozstvi] [real] NOT NULL,
 	[Preprava] [int] NULL,
 	[upsize_ts] [timestamp] NULL,
-	[Castka]  AS ([VynosyJednotka]*[Mnozstvi]),
+	[Castka]  AS CAST(VynosyJednotka*Mnozstvi AS real),
  CONSTRAINT [aaaaaVynosySil_PK] PRIMARY KEY NONCLUSTERED 
 (
 	[ID] ASC
@@ -5983,11 +5983,11 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_ConstraintText', @value=N'Tento záznam nelze kvùli omezením relace mezi tabulkami Preprava a Vynosy pøidat, zmìnit ani odstranit.' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'VynosySil', @level2type=N'CONSTRAINT',@level2name=N'VynosySil_FK00'
 GO
 
-ALTER TABLE [VynosySil] ADD  DEFAULT ((0)) FOR [VynosyJednotka]
-GO
+-- ALTER TABLE [VynosySil] ADD  DEFAULT ((0)) FOR [VynosyJednotka]
+-- GO
 
-ALTER TABLE [VynosySil] ADD  DEFAULT ((0)) FOR [Mnozstvi]
-GO
+-- ALTER TABLE [VynosySil] ADD  DEFAULT ((0)) FOR [Mnozstvi]
+-- GO
 
 
 
