@@ -6032,7 +6032,7 @@ BEGIN
 	-- BEGIN TRAN
 	-- INSERT INTO Preprava WITH (updlock) SELECT * FROM inserted
 	-- COMMIT
-	UPDATE PrepravaSil SET Cislo=CAST([Rok] AS VARCHAR) + '-P' + Right('000' + CAST([ID] AS VARCHAR),3) WHERE ID =(SELECT ID FROM inserted);
+	UPDATE PrepravaSil SET Cislo=CAST([Rok] AS VARCHAR) + '-HK' + Right('000' + CAST([ID] AS VARCHAR),3) WHERE ID =(SELECT ID FROM inserted);
 
 END
 GO
