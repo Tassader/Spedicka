@@ -2830,9 +2830,9 @@ GO
 
 CREATE TABLE [KontejnerSil](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Preprava] [int] NULL,
-	[TypKontejneru] [int] NULL,
-	[Kontejner] [nvarchar](255) NULL,
+	[Preprava] [int] NOT NULL,
+	[TypKontejneru] [int] NOT NULL,
+	[Kontejner] [nvarchar](255) NOT NULL,
 	[DruhKusu] [int] NULL,
 	[PocetKusu] [int] NULL,
 	[GrossWeight] [decimal](18, 2) NULL,
