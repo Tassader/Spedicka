@@ -35,12 +35,11 @@ CREATE TABLE Potencial
     ID int NOT NULL IDENTITY (1, 1),
     Firma int NOT NULL,
     DruhPrepravy int NOT NULL,
-    Destinace int NULL,
-    Pravidelnost int NULL,
-
     Smer varchar(50) NULL,/*import, export, ?vnitro? - melo by spis byt ciselnik, je to vyuzivane i v prepravach (tam je to taky textove*/
     Incoterms int NULL,
     IncotermsMisto varchar(255) NULL,
+    Destinace int NULL,
+    Pravidelnost int NULL,
     Mnozstvi varchar(50) NULL,
     DatumZaznamu datetime NOT NULL
     )  ON [PRIMARY]
