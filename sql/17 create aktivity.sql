@@ -78,7 +78,7 @@ ALTER TABLE Aktivity ADD CONSTRAINT FK_Aktivity_Obchodnik
     ON DELETE  SET NULL
 
 ALTER TABLE Aktivity ADD CONSTRAINT FK_Aktivity_Prilezitost
-    FOREIGN KEY ( Prilezitost ) REFERENCES Prilezitost ( ID )
+    FOREIGN KEY ( Prilezitost ) REFERENCES Prilezitosti ( ID )
     ON DELETE  SET NULL
 
 GO
