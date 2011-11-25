@@ -43,7 +43,7 @@ CREATE TABLE Aktivity
     Typ int NOT NULL,
     Kontakt int NULL,
     Obchodnik int NULL,
-    Popis nvarchar(50) NULL,
+    Popis nvarchar(2000) NULL,
     Prilezitost int NULL,
     Splneno bit NOT NULL
     )  ON [PRIMARY]
