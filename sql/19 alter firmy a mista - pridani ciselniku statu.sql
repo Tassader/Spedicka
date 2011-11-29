@@ -1,5 +1,6 @@
 BEGIN TRAN
-UPDATE Firma SET Stat=203 WHERE Stat LIKE 'Èeská republika' OR Stat LIKE 'CZECH REPUBLIC'; -- jine tam neni
+UPDATE Firma SET Stat=203 WHERE Stat LIKE 'Èeská republika' OR Stat LIKE 'CZECH REPUBLIC' OR Stat LIKE 'CZ'; -- jine tam neni
+UPDATE Firma SET Stat=NULL WHERE Stat <> '203';
 
 ALTER TABLE Firma ALTER COLUMN Stat smallint NULL 
 GO

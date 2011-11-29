@@ -1,4 +1,7 @@
 BEGIN TRANSACTION
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'Stat') AND type in (N'U'))
+    DROP TABLE Stat;
+GO
 CREATE TABLE Stat (
 [N3] smallint NOT NULL,
 [A2] char(2) NOT NULL,
