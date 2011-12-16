@@ -29,7 +29,10 @@ BEGIN
 	-- COMMIT
 	-- 
 	UPDATE Preprava SET 
-        Cislo=CAST(Preprava.Rok AS VARCHAR) + '-' + Right('000' + CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, LEN(P.Cislo)-5)AS smallint)),0)+1 FROM inserted LEFT JOIN Preprava P ON P.Rok=inserted.Rok) AS VARCHAR),CASE When inserted.Rok=2011 THEN 3 ELSE 4 END)
+        Cislo=CAST(YEAR(GETDATE()) AS VARCHAR) + '-' + 
+            Right('000' + 
+                CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, LEN(P.Cislo)-5)AS smallint)),0)+1 FROM Preprava P WHERE LEFT(P.Cislo, 4) like YEAR(GETDATE())) AS VARCHAR),
+                CASE When YEAR(GETDATE())=2011 THEN 3 ELSE 4 END)
   		,KurzEUR = EUR -- ISNULL(EUR, 25)
 		,KurzUSD = USD -- ISNULL(USD, 20)
     FROM inserted
@@ -75,7 +78,10 @@ BEGIN
 	-- INSERT INTO Preprava WITH (updlock) SELECT * FROM inserted
 	-- COMMIT
 	UPDATE PrepravaSil SET 
-        Cislo=CAST(PrepravaSil.Rok AS VARCHAR) + '-HK' + Right('000' + CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, LEN(P.Cislo)-7)AS smallint)),0)+1 FROM inserted LEFT JOIN PrepravaSil P ON P.Rok=inserted.Rok) AS VARCHAR),CASE When inserted.Rok=2011 THEN 3 ELSE 4 END)
+        Cislo=CAST(YEAR(GETDATE()) AS VARCHAR) + '-HK' + 
+            Right('000' + 
+                CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, LEN(P.Cislo)-7)AS smallint)),0)+1 FROM PrepravaSil P WHERE LEFT(P.Cislo, 4) like YEAR(GETDATE())) AS VARCHAR),
+                CASE When YEAR(GETDATE())=2011 THEN 3 ELSE 4 END)
    		,KurzEUR = EUR -- ISNULL(EUR, 25)
 		,KurzUSD = USD -- ISNULL(USD, 20)
     FROM inserted
