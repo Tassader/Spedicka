@@ -145,3 +145,45 @@ GROUP BY Preprava
 GO
 
 -- */
+
+
+
+-- k nakladyKC a vynosyKC je nutne dat triggery :-/
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[NakladyKC_D]'))
+    DROP TRIGGER [NakladyKC_D];
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[NakladyKCSil_D]'))
+    DROP TRIGGER [NakladyKCSil_D];
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[VynosyKC_D]'))
+    DROP TRIGGER [VynosyKC_D];
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[VynosyKCSil_D]'))
+    DROP TRIGGER [VynosyKCSil_D];
+GO
+
+CREATE TRIGGER NakladyKC_D ON NakladyKC
+INSTEAD OF DELETE
+AS
+set nocount on
+    DELETE FROM Naklady WHERE ID IN (SELECT ID FROM DELETED);
+GO
+
+CREATE TRIGGER NakladyKCSil_D ON NakladyKCSil
+INSTEAD OF DELETE
+AS
+set nocount on
+    DELETE FROM NakladySil WHERE ID IN (SELECT ID FROM DELETED);
+GO
+
+CREATE TRIGGER VynosyKC_D ON VynosyKC
+INSTEAD OF DELETE
+AS
+set nocount on
+    DELETE FROM Vynosy WHERE ID IN (SELECT ID FROM DELETED);
+GO
+
+CREATE TRIGGER VynosyKCSil_D ON VynosyKCSil
+INSTEAD OF DELETE
+AS
+set nocount on
+    DELETE FROM VynosySil WHERE ID IN (SELECT ID FROM DELETED);
+GO
+
