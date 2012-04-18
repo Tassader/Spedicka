@@ -1,0 +1,1 @@
+ALTER TABLE Kontakt ADD ZasilatPrani bit NOT NULL CONSTRAINT DF_Kontakt_ZasilatPrani DEFAULT 1;

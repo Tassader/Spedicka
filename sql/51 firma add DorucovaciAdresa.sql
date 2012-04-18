@@ -1,0 +1,1 @@
+ALTER TABLE Firma ADD DorucovaciAdresa nvarchar(255);
