@@ -26,6 +26,7 @@ CREATE TABLE NabidkaAIR2 (
     SCCZaKg decimal(9,3) NULL,
     SCCMena nvarchar(10) NOT NULL,
     Dokumentace decimal(9,3) NULL,
+    Pojisteni decimal(9,3) NULL,
     Doruceni decimal(9,3) NULL,
     Ostatni decimal(9,3) NULL,
     DobaPrepravy varchar(50) NULL,
