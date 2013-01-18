@@ -1,0 +1,1 @@
+ALTER TABLE TypKontejneru ADD TEU tinyint NOT NULL CONSTRAINT DF_TypKontejneru_TEU DEFAULT 0
