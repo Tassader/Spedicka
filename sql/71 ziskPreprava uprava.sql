@@ -16,9 +16,9 @@ GO
 
 ALTER VIEW [ZiskPreprava_Overseas] -- WITH SCHEMABINDING
 AS
-SELECT     p.ID, 'Praha' AS Stredisko, p.Cislo AS P¯eprava, p.Smer, NakladySumy.Naklad, VynosySumy.Vynos, 
-                      VynosySumy.Vynos - NakladySumy.Naklad AS Zisk, p.Rok, p.Mesic AS MÏsÌc, dbo.Firma.Firma AS Z·kaznÌk, dbo.Obchodnik.Jmeno AS ObchodnÌk, 
-                      dbo.DruhPrepravy.DruhPrepravy AS [Druh p¯epravy], d.Jmeno AS Disponent, z.Jmeno AS Zastupce, dop.Firma AS Dopravce
+SELECT     p.ID, 'Praha' AS Stredisko, p.Cislo AS P≈ôeprava, p.Smer, NakladySumy.Naklad, VynosySumy.Vynos, 
+                      VynosySumy.Vynos - NakladySumy.Naklad AS Zisk, p.Rok, p.Mesic AS Mƒõs√≠c, dbo.Firma.Firma AS Z√°kazn√≠k, dbo.Obchodnik.Jmeno AS Obchodn√≠k, 
+                      dbo.DruhPrepravy.DruhPrepravy AS [Druh p≈ôepravy], d.Jmeno AS Disponent, z.Jmeno AS Zastupce, dop.Firma AS Dopravce
 
                     ,Zasilka_20DC,Zasilka_40DC,Zasilka_40HC,Zasilka_45HC,Zasilka_CBM,Zasilka_GrossWeight,Zasilka_VolumeWeight,Zasilka_LDM,
                     CASE WHEN Zasilka_VolumeWeight > ISNULL(Zasilka_GrossWeight,0) THEN Zasilka_VolumeWeight ELSE Zasilka_GrossWeight END AS Zasilka_CHWeight
@@ -40,9 +40,9 @@ GO
 
 ALTER VIEW [ZiskPreprava_Road] -- WITH SCHEMABINDING
 AS
-SELECT     p.ID, 'Hradec' AS Stredisko, p.Cislo AS P¯eprava, p.Smer, NakladySumy.Naklad, VynosySumy.Vynos, 
-                      VynosySumy.Vynos - NakladySumy.Naklad AS Zisk, p.Rok, p.Mesic AS MÏsÌc, dbo.Firma.Firma AS Z·kaznÌk, dbo.Obchodnik.Jmeno AS ObchodnÌk, 
-                      dbo.DruhPrepravy.DruhPrepravy AS [Druh p¯epravy], d.Jmeno AS Disponent, z.Jmeno AS Zastupce, dop.Firma AS Dopravce
+SELECT     p.ID, 'Hradec' AS Stredisko, p.Cislo AS P≈ôeprava, p.Smer, NakladySumy.Naklad, VynosySumy.Vynos, 
+                      VynosySumy.Vynos - NakladySumy.Naklad AS Zisk, p.Rok, p.Mesic AS Mƒõs√≠c, dbo.Firma.Firma AS Z√°kazn√≠k, dbo.Obchodnik.Jmeno AS Obchodn√≠k, 
+                      dbo.DruhPrepravy.DruhPrepravy AS [Druh p≈ôepravy], d.Jmeno AS Disponent, z.Jmeno AS Zastupce, dop.Firma AS Dopravce
 
                     ,Zasilka_20DC,Zasilka_40DC,Zasilka_40HC,Zasilka_45HC,Zasilka_CBM,Zasilka_GrossWeight,Zasilka_VolumeWeight,Zasilka_LDM,
                     CASE WHEN Zasilka_VolumeWeight > ISNULL(Zasilka_GrossWeight,0) THEN Zasilka_VolumeWeight ELSE Zasilka_GrossWeight END AS Zasilka_CHWeight
@@ -65,9 +65,9 @@ GO
 
 ALTER VIEW [ZiskPreprava_AT] -- WITH SCHEMABINDING
 AS
-SELECT     p.ID, 'AM Trucking' AS Stredisko, p.Cislo AS P¯eprava, p.Smer, NakladySumy.Naklad, VynosySumy.Vynos, 
-                      VynosySumy.Vynos - COALESCE(NakladySumy.Naklad,0) AS Zisk, p.Rok, p.Mesic AS MÏsÌc, dbo.Firma.Firma AS Z·kaznÌk, dbo.Obchodnik.Jmeno AS ObchodnÌk, 
-                      dbo.DruhPrepravy.DruhPrepravy AS [Druh p¯epravy], d.Jmeno AS Disponent, z.Jmeno AS Zastupce, dop.Firma AS Dopravce
+SELECT     p.ID, 'AM Trucking' AS Stredisko, p.Cislo AS P≈ôeprava, p.Smer, NakladySumy.Naklad, VynosySumy.Vynos, 
+                      VynosySumy.Vynos - COALESCE(NakladySumy.Naklad,0) AS Zisk, p.Rok, p.Mesic AS Mƒõs√≠c, dbo.Firma.Firma AS Z√°kazn√≠k, dbo.Obchodnik.Jmeno AS Obchodn√≠k, 
+                      dbo.DruhPrepravy.DruhPrepravy AS [Druh p≈ôepravy], d.Jmeno AS Disponent, z.Jmeno AS Zastupce, dop.Firma AS Dopravce
 
                     ,Zasilka_20DC,Zasilka_40DC,Zasilka_40HC,Zasilka_45HC,Zasilka_CBM,Zasilka_GrossWeight,Zasilka_VolumeWeight,Zasilka_LDM,
                     CASE WHEN Zasilka_VolumeWeight > ISNULL(Zasilka_GrossWeight,0) THEN Zasilka_VolumeWeight ELSE Zasilka_GrossWeight END AS Zasilka_CHWeight
@@ -133,10 +133,10 @@ AS
 -- PrepravaFull:
 SELECT p.*, an.CastkaKC AS NakladyKC, av.CastkaKC AS VynosyKC, av.CastkaKC-ISNULL(an.CastkaKC,0) AS ZiskKC, DuplicitniZakRef, DatumCasVykladky,
     Stav2=CASE 
-        WHEN CURRENT_TIMESTAMP < ETS THEN 'P¯ed odesl·nÌm'
-        WHEN CURRENT_TIMESTAMP < ETA THEN 'Na cestÏ'
-        WHEN CURRENT_TIMESTAMP < DatumCasVykladky THEN 'Na doruËenÌ'
-        WHEN CURRENT_TIMESTAMP >= DatumCasVykladky THEN 'DoruËena'
+        WHEN CURRENT_TIMESTAMP < ETS THEN 'P≈ôed odesl√°n√≠m'
+        WHEN CURRENT_TIMESTAMP < ETA THEN 'Na cestƒõ'
+        WHEN CURRENT_TIMESTAMP < DatumCasVykladky THEN 'Na doruƒçen√≠'
+        WHEN CURRENT_TIMESTAMP >= DatumCasVykladky THEN 'Doruƒçena'
     END
 FROM Preprava AS p
 -- AgregovaneKontejnery (pouze potrebne)
