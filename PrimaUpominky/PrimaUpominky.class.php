@@ -60,7 +60,9 @@ function connectToDb($dsn, $username=NULL, $password=NULL, array $atd=NULL)
     //$this->stGetCompanyDetails=$this->db->prepare('SELECT TOP 1 k.email FROM Firma f /*LEFT*/ join Kontakt k ON k.Firma=f.ID WHERE f.Firma LIKE ? AND (k.email IS NOT NULL /*OR k.id IS NULL*/) ORDER BY k.ID');
     //nebo podle ICO
     //$this->stGetCompanyDetails=$this->db->prepare('SELECT TOP 1 k.email FROM Firma f /*LEFT*/ join Kontakt k ON k.Firma=f.ID WHERE f.ICO = ? AND (k.email IS NOT NULL /*OR k.id IS NULL*/) ORDER BY k.ID');
-    $this->stGetCompanyDetails=$this->db->prepare('SELECT TOP 1 k.email FROM Firma f /*LEFT*/ join Kontakt k ON k.Firma=f.ID WHERE f.ICO LIKE ? AND (k.email IS NOT NULL /*OR k.id IS NULL*/) ORDER BY k.ID');
+    $this->stGetCompanyDetails1=$this->db->prepare('SELECT k.email FROM Firma f /*LEFT*/ join Kontakt k ON k.Firma=f.ID WHERE f.ICO LIKE ? AND k.ZasilatUpominky=1 AND (k.email IS NOT NULL)');
+
+    $this->stGetCompanyDetails2=$this->db->prepare('SELECT TOP 1 k.email FROM Firma f /*LEFT*/ join Kontakt k ON k.Firma=f.ID WHERE f.ICO LIKE ? AND (k.email IS NOT NULL /*OR k.id IS NULL*/) ORDER BY k.ID');
 }
 
 
@@ -172,19 +174,28 @@ function readTable($filename, $time_limit=0)
     {
         try 
         {
-            $this->stGetCompanyDetails->execute(array($ico)) or $this->_reportError(var_dump($this->stGetCompanyDetails->errorInfo()), @$this->remindersArray[$ico]['cislo_faktury']);
-            $email=$this->stGetCompanyDetails->fetchColumn();
-            //print("$firma: '$email'");
-            $email=trim($email);
-            //print("trimmed: '$email'\n\n");
-            if ($this->_checkEmailAddress($email))
+            $this->stGetCompanyDetails1->execute(array($ico)) or $this->_reportError(var_dump($this->stGetCompanyDetails1->errorInfo()), @$this->remindersArray[$ico]['cislo_faktury']);
+            $emails=$this->stGetCompanyDetails1->fetchAll(PDO::FETCH_ASSOC);
+            if (count($emails)==0)
             {
-                $this->remindersArray[$ico]['email']=$email;
+                $this->stGetCompanyDetails2->execute(array($ico)) or $this->_reportError(var_dump($this->stGetCompanyDetails2->errorInfo()), @$this->remindersArray[$ico]['cislo_faktury']);
+                $emails=$this->stGetCompanyDetails2->fetchAll(PDO::FETCH_ASSOC);
             }
-            else
+
+            foreach ($emails as $email)
             {
-                $this->_reportError("Neplatna emailova adresa '$email' u firmy '".$value['seznam_pohledavek'][0]['firma']."' (IC $ico)", $value['seznam_pohledavek'][0]['cislo_faktury']);
-                unset($this->remindersArray[$ico]);
+                //print("$firma: '$email'");
+                $email=trim($email['email']);
+                //print("trimmed: '$email'\n\n");
+                if ($this->_checkEmailAddress($email))
+                {
+                    $this->remindersArray[$ico]['email'][]=$email;
+                }
+                else
+                {
+                    $this->_reportError("Neplatna emailova adresa '$email' u firmy '".$value['seznam_pohledavek'][0]['firma']."' (IC $ico)", $value['seznam_pohledavek'][0]['cislo_faktury']);
+                    unset($this->remindersArray[$ico]);
+                }
             }
         }
         catch (PDOException $err) 
@@ -246,7 +257,7 @@ protected function _reallySendReminder($email, $reminder, $reminderNum)
     $mail = new Nette\Mail\Message;
 
     $mail->setFrom('PrimaLogistics,s.r.o. <upominky@primalogistics.cz>') //TODO do konfigurace
-        ->addTo($email, $reminder[0]['firma'])
+        ->addTo($email[0], $reminder[0]['firma']) // TODO pro vice adresatu
         //->addTo('tomas.zadrazil@centrum.cz')
         //->addTo('premysl.hanak@primalogistics.cz')
         //->addTo('jaroslav.zoubek@primalogistics.cz')
