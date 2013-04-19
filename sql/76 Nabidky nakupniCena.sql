@@ -1,0 +1,1 @@
+ALTER TABLE Nabidka ADD NakupniCena nvarchar(4000) NULL;
