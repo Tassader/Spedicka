@@ -47,6 +47,12 @@ protected $invoicePath;
  */
 protected $smtpParams=array();
 
+/**
+ * 
+ * @var Nette\Mail\SmtpMailer
+ */
+protected $smtpMailer;
+
 //sqlsrv:server=hostname_or_ip;Database=database_name;
 function connectToDb($dsn, $username=NULL, $password=NULL, array $atd=NULL)
 {
@@ -194,8 +200,14 @@ function readTable($filename, $time_limit=0)
                 else
                 {
                     $this->_reportError("Neplatna emailova adresa '$email' u firmy '".$value['seznam_pohledavek'][0]['firma']."' (IC $ico)", $value['seznam_pohledavek'][0]['cislo_faktury']);
-                    unset($this->remindersArray[$ico]);
+                    //unset($this->remindersArray[$ico]);
                 }
+            }
+
+            if (empty($this->remindersArray[$ico]['email']))
+            {
+                $this->_reportError("Chybi platna emailova adresa u firmy '".$value['seznam_pohledavek'][0]['firma']."' (IC $ico)", $value['seznam_pohledavek'][0]['cislo_faktury']);
+                unset($this->remindersArray[$ico]);
             }
         }
         catch (PDOException $err) 
@@ -210,6 +222,8 @@ function readTable($filename, $time_limit=0)
 
 function sendReminder($days, $reminderNum/*, $text*/)
 {
+    $this->smtpMailer = new Nette\Mail\SmtpMailer($this->smtpParams);
+    
     $this->stGetReminders->execute(array($reminderNum));
     $already_sent_reminders=array();
     while ($already_sent_reminder=$this->stGetReminders->fetch())
@@ -226,7 +240,7 @@ function sendReminder($days, $reminderNum/*, $text*/)
             if ($pohledavka['po_splatnosti']>=$days && !in_array($pohledavka['cislo_faktury'], $already_sent_reminders))
             {
                 $reminderToSend[]=$pohledavka;
-                $this->stSaveReminder->execute(array($pohledavka['cislo_faktury'], $reminderNum, $this->remindersArray[$ico]['email']));
+                $this->stSaveReminder->execute(array($pohledavka['cislo_faktury'], $reminderNum, implode(", ",$this->remindersArray[$ico]['email'])));
             }
         }
         if (!empty($reminderToSend))
@@ -238,31 +252,35 @@ function sendReminder($days, $reminderNum/*, $text*/)
             }
             catch(Exception $e)
             {
-                $this->_reportError('Chyba pøi odesílání: '.$e->GetMessage(),$invoice['cislo_faktury']);
+                $this->_reportError('Chyba pøi odesílání: '.$e->GetMessage(),$pohledavka['cislo_faktury']);
             }
             //$remindersToSend[$firma]['email']=$this->remindersArray[$firma]['email'];
         }
     }
 } //text by se mohl brat z DB?
 
-protected function _reallySendReminder($email, $reminder, $reminderNum)
+protected function _reallySendReminder(array $email, $reminder, $reminderNum)
 {
     $template = new Nette\Templating\FileTemplate('templates\upominka'.$reminderNum.'.phtml');
     $template->registerFilter(new Nette\Latte\Engine);
     $template->reminder = $reminder;
-    $template->email = $email;
+    $template->email = implode(",",$email);
     $template->registerHelperLoader('Nette\Templating\DefaultHelpers::loader');
     //$template->setCacheStorage($context->templateCacheStorage);
 
     $mail = new Nette\Mail\Message;
 
     $mail->setFrom('PrimaLogistics,s.r.o. <upominky@primalogistics.cz>') //TODO do konfigurace
-        ->addTo($email[0], $reminder[0]['firma']) // TODO pro vice adresatu
         //->addTo('tomas.zadrazil@centrum.cz')
         //->addTo('premysl.hanak@primalogistics.cz')
         //->addTo('jaroslav.zoubek@primalogistics.cz')
         ->addBCC('upominky@primalogistics.cz')
         ->setHtmlBody($template);
+
+    foreach ($email as $email_address)
+    {
+        $mail->addTo($email_address);
+    }
 
     foreach ($reminder as $invoice)
     {
@@ -287,13 +305,11 @@ protected function _reallySendReminder($email, $reminder, $reminderNum)
         $mail->addAttachment($invoice_file);
     }
 
-    $mailer = new Nette\Mail\SmtpMailer($this->smtpParams);
-    //alternativa$mailer->send($mail);
-
-    $mail->setMailer($mailer);
-
+    $this->smtpMailer->send($mail);
+/*
+    $mail->setMailer($this->smtpMailer);
     $mail->send();
-
+*/
     //print($mail->generateMessage()); //toto lze ulozit na P jako *.eml
 }
 

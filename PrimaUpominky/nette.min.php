@@ -19351,6 +19351,12 @@ class SmtpMailer extends Nette\Object implements IMailer
 			if (!stream_socket_enable_crypto($this->connection, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
 				throw new SmtpException('Unable to connect via TLS.');
 			}
+//TZ
+  		$this->write("EHLO $self");
+  		if ((int) $this->read() !== 250) {
+  			$this->write("HELO $self", 250);
+  		}
+//TZ
 		}
 
 		if ($this->username != NULL && $this->password != NULL) {
@@ -19369,8 +19375,8 @@ class SmtpMailer extends Nette\Object implements IMailer
 	private function write($line, $expectedCode = NULL, $message = NULL)
 	{
 		fwrite($this->connection, $line . Message::EOL);
-		if ($expectedCode && !in_array((int) $this->read(), (array) $expectedCode)) {
-			throw new SmtpException('SMTP server did not accept ' . ($message ? $message : $line));
+		if ($expectedCode && !in_array((int) $code=$this->read(), (array) $expectedCode)) {
+			throw new SmtpException('SMTP server did not accept ' . ($message ? $message : $line) . ' code:' . $code);
 		}
 	}
 
