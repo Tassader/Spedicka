@@ -42,22 +42,10 @@ function getRecipients($day, $month)
     return $arrNameDays;
 }
 
-function setInvoiceLookupPath($path)
-{
-    $this->invoicePath=$path;
-}
-
 function setSmtpParams($smtpParams)
 {
     $this->smtpParams=$smtpParams;
 }
-/**
- * Gets filename (with path) of next unprocessed file that matches given mask
- *
- * @param $filename_mask
- * @return string filename of excel table to proccess
- * @return false if no file found
- */
 
 function sendMail($email)
 {
