@@ -2,6 +2,9 @@
 
 -- DECLARE @RoleName sysname
 -- set @RoleName = N'prima_overseas'
+IF OBJECT_ID('tempdb..#droprole') IS NOT NULL
+	DROP proc #droprole
+GO
 CREATE PROC #droprole
     @RoleName sysname
 AS
@@ -63,15 +66,15 @@ exec sp_addrolemember 'prima_road', 'SERVER\Hradec';
 
 exec sp_addrolemember 'prima_AT', 'SERVER\AMTrucking';
 
-
 --
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Aktivity TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON CelniUrad TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON DruhKusu TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON DruhPrepravy TO prima_spolecne;
--- GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Firma TO prima_spolecne; -- pak nejde dát revoke na sloupec
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,Email,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas) TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT         ON Firma (SplatnostFaktur,SplatnostFakturSil,Mena,MenaSil,SplatnostClo) TO prima_spolecne;
+GRANT SELECT, REFERENCES, DELETE, INSERT         ON Firma TO prima_spolecne; -- pak nejde dát revoke na sloupec
+GRANT                                     UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas,Disponent) TO prima_spolecne;
+-- GRANT SELECT, REFERENCES, DELETE, INSERT         ON Firma (SplatnostFaktur,SplatnostFakturSil,Mena,MenaSil,SplatnostClo) TO prima_spolecne;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON FirmaSOP TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Incoterms TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Kontakt TO prima_spolecne;
 GRANT SELECT, REFERENCES                         ON Kurzy TO prima_spolecne;
