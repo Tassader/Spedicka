@@ -69,10 +69,12 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Aktivity TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON CelniUrad TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON DruhKusu TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON DruhPrepravy TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Firma TO prima_spolecne;
+-- GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Firma TO prima_spolecne; -- pak nejde dát revoke na sloupec
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,Email,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas) TO prima_spolecne;
+GRANT SELECT, REFERENCES, DELETE, INSERT         ON Firma (SplatnostFaktur,SplatnostFakturSil,Mena,MenaSil,SplatnostClo) TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Incoterms TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Kontakt TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Kurzy TO prima_spolecne;
+GRANT SELECT, REFERENCES                         ON Kurzy TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Misto TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Nabidka TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR TO prima_spolecne;
@@ -101,19 +103,15 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON ZiskPreprava TO prima_spolec
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovanyZiskPreprava TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON ZiskPrepravaRozdily TO prima_spolecne;
 -- toto pouze ucto a mozna MAN
+/*
 REVOKE UPDATE ON [Firma] ([SplatnostFaktur]) TO prima_spolecne;
 REVOKE UPDATE ON [Firma] ([SplatnostFakturSil]) TO prima_spolecne;
 REVOKE UPDATE ON [Firma] ([SplatnostClo]) TO prima_spolecne;
 REVOKE UPDATE ON [Firma] ([Mena]) TO prima_spolecne;
 REVOKE UPDATE ON [Firma] ([MenaSil]) TO prima_spolecne;
-REVOKE UPDATE ON [Firma] ([SplatnostFaktur]) TO prima_spolecne;
-REVOKE UPDATE ON [Firma] ([SplatnostFakturSil]) TO prima_spolecne;
-REVOKE UPDATE ON [Firma] ([Mena]) TO prima_spolecne;
-REVOKE UPDATE ON [Firma] ([MenaSil]) TO prima_spolecne;
-REVOKE UPDATE ON [Firma] ([SplatnostClo]) TO prima_spolecne;
 
 REVOKE DELETE, INSERT, UPDATE ON Kurzy TO prima_spolecne;
-
+*/
 GO
 
 -- Overseas
