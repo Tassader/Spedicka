@@ -1,0 +1,30 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Změny kategorií firem</title>
+    <style>
+    td { Text-align: right; }
+    body { font-family: Arial; }
+    </style>
+</head>
+<body>
+<p>Změny od {$time-604800|date:'d.n.Y'} do {$time|date:'d.n.Y'}:</p>
+<table border="1" cellspacing="0" cellpadding="4" style="border: 1px solid black">
+<tr>
+    <th>Datum</th>
+    <th>Uživatel</th>
+    <th>Firma</th>
+    <th>Stará hodnota</th>
+    <th>Nová hodnota</th>
+</tr>
+{var $zisk=0}
+<tr n:foreach="$rows as $row">
+    <td>{$row[Datum]|date:'d.n.Y H:i'}&nbsp;</td>
+    <td>{$row[Uzivatel]}&nbsp;</td>
+    <td>{$row[Firma]}&nbsp;</td>
+    <td>{$row[Stare]}&nbsp;</td>
+    <td>{$row[Nove]}&nbsp;</td>
+</tr>
+</table>
+</body>
+</html>

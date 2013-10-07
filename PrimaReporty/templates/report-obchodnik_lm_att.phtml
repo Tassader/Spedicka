@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Kalkulace zisku - Lukáš Matoušek</title>
+    <style>
+    td { text-align: right; font-size:10px}
+    body { font-family: Arial; }
+    </style>
+</head>
+<body>
+<img src="logo.png" align="right" width="274" height="35" />
+<p>Zisk za minulé měsíce (Lukáš Matoušek):</p>
+<table border="1" cellspacing="0" cellpadding="4" style="border: 1px solid black">
+<tr>
+    <th rowspan="2">Zákazník</th>
+    <th rowspan="2">Podíl</th>
+    <th colspan="2">{$time-2419200*3|date:'n'}/{$time-2419200*3|date:'Y'}</th>
+    <th colspan="2">{$time-2419200*2|date:'n'}/{$time-2419200*2|date:'Y'}</th>
+    <th colspan="2">{$time-2419200*1|date:'n'}/{$time-2419200*1|date:'Y'}</th>
+</tr>
+<tr>
+    <th>Počet přeprav</th>
+    <th>Zisk</th>
+    <th>Počet přeprav</th>
+    <th>Zisk</th>
+    <th>Počet přeprav</th>
+    <th>Zisk</th>
+</tr>
+{var $zisk1=0;}
+{var $zisk2=0;}
+{var $zisk3=0;}
+{var $pocet1=0;}
+{var $pocet2=0;}
+{var $pocet3=0;}
+<tr n:foreach="$rows as $row">
+    <td><small>{$row[Zakaznik]}</small></td>
+    <td align="right">{$row[Podil]}</td>
+    <td align="right">{$row[Pocet1]}</td>
+    <td align="right">{if $row[Zisk1]}{$row[Zisk1]|number:2:',':' '}{/if}</td>
+    <td align="right">{$row[Pocet2]}</td>
+    <td align="right">{if $row[Zisk2]}{$row[Zisk2]|number:2:',':' '}{/if}</td>
+    <td align="right">{$row[Pocet3]}</td>
+    <td align="right">{if $row[Zisk3]}{$row[Zisk3]|number:2:',':' '}{/if}</td>
+    {? $zisk1+=$row[Zisk1]}
+    {? $zisk2+=$row[Zisk2]}
+    {? $zisk3+=$row[Zisk3]}
+    {? $pocet1+=$row[Pocet1]}
+    {? $pocet2+=$row[Pocet2]}
+    {? $pocet3+=$row[Pocet3]}
+</tr>
+<tr>
+    <th>Celkem</th>
+    <th></th>
+    <th align="right">{$pocet1}</th>
+    <th align="right">{$zisk1|number:2:',':' '}</th>
+    <th align="right">{$pocet2}</th>
+    <th align="right">{$zisk2|number:2:',':' '}</th>
+    <th align="right">{$pocet3}</th>
+    <th align="right">{$zisk3|number:2:',':' '}</th>
+</tr>
+</table>
+</body>
+</html>
