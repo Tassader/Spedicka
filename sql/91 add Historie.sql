@@ -17,7 +17,7 @@ CONSTRAINT PK_Historie PRIMARY KEY CLUSTERED (ID ASC)
 )
 GO
 
------
+---------------------------------------------------
 --ALTER TABLE Historie DROP CONSTRAINT DF_Historie_Uzivatel
 --ALTER TABLE Historie ADD CONSTRAINT DF_Historie_Uzivatel DEFAULT stuff(suser_sname(), 1, charindex('\', suser_sname()), '') FOR Uzivatel
 ---------------------------------------------------
@@ -44,27 +44,6 @@ BEGIN
   begin
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
     SELECT 'Firma', 'Kategorie', i.ID, '<neexistujici firma>', i.Kategorie, (SELECT MAX(ID)+1 FROM Historie)
-    FROM Inserted AS i
-  end
-
-  IF UPDATE(Prodejce)
-  begin
-    INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
-    SELECT 'Firma', 'Prodejce', i.ID, '<neexistujici firma>', i.Prodejce, (SELECT MAX(ID)+1 FROM Historie)
-    FROM Inserted AS i
-  end
-
-  IF UPDATE(Disponent)
-  begin
-    INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
-    SELECT 'Firma', 'Disponent', i.ID, '<neexistujici firma>', i.Disponent, (SELECT MAX(ID)+1 FROM Historie)
-    FROM Inserted AS i
-  end
-
-  IF UPDATE(Priorita)
-  begin
-    INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
-    SELECT 'Firma', 'Priorita', i.ID, '<neexistujici firma>', i.Priorita, (SELECT MAX(ID)+1 FROM Historie)
     FROM Inserted AS i
   end
 END
@@ -135,7 +114,13 @@ SELECT 'Firma', ID, stuff(Zalozil, 1, charindex('\', Zalozil), ''), ZalozilCas, 
 FROM Firma WHERE zalozil IS NOT NULL
 */
 
+UPDATE Historie SET Uzivatel=stuff(Uzivatel, 1, charindex('\', Uzivatel), '');
+
 ----- v budoucnu ...
 -- nejdriv jen nahrat u sebe a sesynchronizovat a nekdy pozdeji pak na server
 --ALTER TABLE Firma DROP COLUMN ZalozilCas;
 --ALTER TABLE Firma DROP COLUMN Zalozil;
+BEGIN TRAN
+  DELETE FROM Historie WHERE stare='<neexistujici firma>' AND Sloupec<>'Kategorie';
+  SELECT * FROM Historie;
+ROLLBACK
