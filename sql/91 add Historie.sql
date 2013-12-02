@@ -62,7 +62,7 @@ BEGIN
   begin
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, Uzivatel, ID)
     SELECT 'Firma', 'Kategorie', i.ID/*ISNULL(i.ID,d.ID)*/, d.Kategorie, i.Kategorie,
-    stuff(suser_sname(), 1, charindex('\', suser_sname()), '')+CASE WHEN trigger_nestlevel()>1 THEN ' (automaticky)' END
+    stuff(suser_sname(), 1, charindex('\', suser_sname()), '')+CASE WHEN trigger_nestlevel()>1 THEN ' (automaticky)' ELSE '' END
     , (SELECT MAX(ID)+1 FROM Historie)
     FROM
     ( SELECT ID,Kategorie FROM Inserted
