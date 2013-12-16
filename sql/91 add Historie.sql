@@ -39,13 +39,14 @@ BEGIN
   INSERT INTO Historie (Tabulka, Radek, Nove, ID)
   SELECT 'Firma', i.ID, i.Kategorie, (SELECT MAX(ID)+1 FROM Historie)
   FROM Inserted AS i
-
+/*
   IF UPDATE(Kategorie)
   begin
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
     SELECT 'Firma', 'Kategorie', i.ID, '<neexistujici firma>', i.Kategorie, (SELECT MAX(ID)+1 FROM Historie)
     FROM Inserted AS i
   end
+*/
 END
 GO
 
@@ -60,15 +61,28 @@ BEGIN
 
   IF UPDATE(Kategorie)
   begin
-    INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, Uzivatel, ID)
-    SELECT 'Firma', 'Kategorie', i.ID/*ISNULL(i.ID,d.ID)*/, d.Kategorie, i.Kategorie,
-    stuff(suser_sname(), 1, charindex('\', suser_sname()), '')+CASE WHEN trigger_nestlevel()>1 THEN ' (automaticky)' ELSE '' END
-    , (SELECT MAX(ID)+1 FROM Historie)
+    INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
+    SELECT 'Firma', 'Kategorie', i.ID/*ISNULL(i.ID,d.ID)*/, d.Kategorie, i.Kategorie, (SELECT MAX(ID)+1 FROM Historie)
     FROM
     ( SELECT ID,Kategorie FROM Inserted
       EXCEPT
       SELECT ID,Kategorie FROM Deleted) AS i
     LEFT JOIN Deleted d ON i.ID=d.ID
+  end
+
+  IF UPDATE(KategorieCRM)
+  begin
+    INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, Uzivatel, ID)
+    SELECT 'Firma', 'KategorieCRM', i.ID/*ISNULL(i.ID,d.ID)*/, cd.KategorieCRM, ci.KategorieCRM,
+    stuff(suser_sname(), 1, charindex('\', suser_sname()), '')+CASE WHEN trigger_nestlevel()>1 THEN ' (automaticky)' ELSE '' END
+    , (SELECT MAX(ID)+1 FROM Historie)
+    FROM
+    ( SELECT ID,KategorieCRM FROM Inserted
+      EXCEPT
+      SELECT ID,KategorieCRM FROM Deleted) AS i
+    LEFT JOIN Deleted d ON i.ID=d.ID
+    LEFT JOIN KategorieCRM ci ON ci.ID=i.KategorieCRM
+    LEFT JOIN KategorieCRM cd ON cd.ID=d.KategorieCRM
   end
 
   IF UPDATE(Prodejce)
@@ -121,6 +135,6 @@ UPDATE Historie SET Uzivatel=stuff(Uzivatel, 1, charindex('\', Uzivatel), '');
 --ALTER TABLE Firma DROP COLUMN ZalozilCas;
 --ALTER TABLE Firma DROP COLUMN Zalozil;
 BEGIN TRAN
-  DELETE FROM Historie WHERE stare='<neexistujici firma>' AND Sloupec<>'Kategorie';
+  DELETE FROM Historie WHERE stare='<neexistujici firma>' --AND Sloupec<>'Kategorie';
   SELECT * FROM Historie;
 ROLLBACK
