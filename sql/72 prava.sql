@@ -72,7 +72,7 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON CelniUrad TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON DruhKusu TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON DruhPrepravy TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Firma TO prima_spolecne; -- pak nejde dát revoke na sloupec
-GRANT                                     UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas,Disponent) TO prima_spolecne;
+GRANT                                     UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,KategorieCRM,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas,Disponent) TO prima_spolecne;
 -- GRANT SELECT, REFERENCES, DELETE, INSERT         ON Firma (SplatnostFaktur,SplatnostFakturSil,Mena,MenaSil,SplatnostClo) TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON FirmaSOP TO prima_spolecne;
 GRANT SELECT, REFERENCES                         ON Historie TO prima_spolecne;
@@ -140,6 +140,7 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneNakladySil TO prim
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneVynosySil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NakladyKCSil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON PrepravaFullSil TO prima_road;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON StatistikaSmeru TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON VynosyKCSil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON ZiskPreprava_Road TO prima_road;
 -- views:
