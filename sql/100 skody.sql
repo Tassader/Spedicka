@@ -33,8 +33,50 @@ BEGIN
 	UPDATE Skody SET 
         Cislo='SK'+CAST(YEAR(GETDATE()) AS VARCHAR) + '-' + 
             Right('00' + 
-                CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, LEN(P.Cislo)-7)AS smallint)),0)+1 FROM Skody P WHERE RIGHT(LEFT(P.Cislo, 6),4) like YEAR(GETDATE())) AS VARCHAR),3)
+                CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, 3)AS smallint)),0)+1 FROM Skody P WHERE RIGHT(LEFT(P.Cislo, 6),4) like YEAR(GETDATE())) AS VARCHAR),3)
     FROM inserted
     WHERE Skody.ID=inserted.ID;
+END
+GO
+
+---------------------------------
+-- IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'PojisteniOnInsert') AND type in (N'TR'))
+--    DROP TRIGGER PojisteniOnInsert;
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SkodySil') AND type in (N'U'))
+    DROP TABLE SkodySil;
+GO
+
+CREATE TABLE SkodySil(
+    ID int IDENTITY(1,1) NOT NULL CONSTRAINT PK_SkodySil PRIMARY KEY CLUSTERED,
+    -- NOT FOR REPLICATION, -- kvuli moznosti dvou SQL serveru budu nastavovat IDENTITY increment na 2 (seed se snadno zmeni, increment moc ne) -- ??
+    Preprava int NOT NULL CONSTRAINT FK_SkodySil_PrepravaSil REFERENCES PrepravaSil (ID),
+    Cislo char(12),
+    DatumSkody date,
+    Pojisteno bit,
+    Resitel int,
+    VycislenaSkoda nvarchar (255),
+    VyplacenaSkoda decimal(9,2),
+    Dodavatel int CONSTRAINT FK_SkodySil_Dodavatel REFERENCES Firma (ID),
+    DatumUkonceni date,
+    DatumVyplaceni date,
+    Poznamka nvarchar(255)
+)
+GO
+
+CREATE TRIGGER SkodySilOnInsert
+   ON  SkodySil
+   FOR INSERT
+   NOT FOR REPLICATION
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE SkodySil SET
+        Cislo='SK'+CAST(YEAR(GETDATE()) AS VARCHAR) + '-HK' +
+            Right('00' +
+                CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, 3)AS smallint)),0)+1 FROM SkodySil P WHERE RIGHT(LEFT(P.Cislo, 6),4) like YEAR(GETDATE())) AS VARCHAR),3)
+    FROM inserted
+    WHERE SkodySil.ID=inserted.ID;
 END
 GO
