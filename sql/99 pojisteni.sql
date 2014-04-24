@@ -36,7 +36,7 @@ BEGIN
 	UPDATE Pojisteni SET 
         Cislo='POJ'+CAST(YEAR(GETDATE()) AS VARCHAR) + '-' + 
             Right('00' + 
-                CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, LEN(P.Cislo)-8)AS smallint)),0)+1 FROM Pojisteni P WHERE RIGHT(LEFT(P.Cislo, 6),4) like YEAR(GETDATE())) AS VARCHAR),3)
+                CAST((SELECT ISNULL(MAX(CAST(RIGHT(P.Cislo, 3)AS smallint)),0)+1 FROM Pojisteni P WHERE RIGHT(LEFT(P.Cislo, 7),4) like YEAR(GETDATE())) AS VARCHAR),3)
     FROM inserted
     WHERE Pojisteni.ID=inserted.ID;
 END
