@@ -37,7 +37,7 @@ BEGIN
 	SET NOCOUNT ON;
 
   INSERT INTO Historie (Tabulka, Radek, Nove, ID)
-  SELECT 'Firma', i.ID, i.Kategorie, (SELECT MAX(ID)+1 FROM Historie)
+  SELECT 'Firma', i.ID, i.Kategorie, (SELECT MAX(ID) FROM Historie) + ROW_NUMBER() OVER (ORDER BY (select 1))
   FROM Inserted AS i
 /*
   IF UPDATE(Kategorie)
@@ -62,7 +62,7 @@ BEGIN
   IF UPDATE(Kategorie)
   begin
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
-    SELECT 'Firma', 'Kategorie', i.ID/*ISNULL(i.ID,d.ID)*/, d.Kategorie, i.Kategorie, (SELECT MAX(ID)+1 FROM Historie)
+    SELECT 'Firma', 'Kategorie', i.ID/*ISNULL(i.ID,d.ID)*/, d.Kategorie, i.Kategorie, (SELECT MAX(ID) FROM Historie) + ROW_NUMBER() OVER (ORDER BY (select 1))
     FROM
     ( SELECT ID,Kategorie FROM Inserted
       EXCEPT
@@ -75,7 +75,7 @@ BEGIN
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, Uzivatel, ID)
     SELECT 'Firma', 'KategorieCRM', i.ID/*ISNULL(i.ID,d.ID)*/, cd.KategorieCRM, ci.KategorieCRM,
     stuff(suser_sname(), 1, charindex('\', suser_sname()), '')+CASE WHEN trigger_nestlevel()>1 THEN ' (automaticky)' ELSE '' END
-    , (SELECT MAX(ID)+1 FROM Historie)
+    , (SELECT MAX(ID) FROM Historie) + ROW_NUMBER() OVER (ORDER BY (select 1))
     FROM
     ( SELECT ID,KategorieCRM FROM Inserted
       EXCEPT
@@ -88,29 +88,33 @@ BEGIN
   IF UPDATE(Prodejce)
   begin
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
-    SELECT 'Firma', 'Prodejce', i.ID, d.Prodejce, i.Prodejce, (SELECT MAX(ID)+1 FROM Historie)
+    SELECT 'Firma', 'Prodejce', i.ID, od.Prijmeni, oi.Prijmeni, (SELECT MAX(ID) FROM Historie) + ROW_NUMBER() OVER (ORDER BY (select 1))
     FROM
     ( SELECT ID,Prodejce FROM Inserted
       EXCEPT
       SELECT ID,Prodejce FROM Deleted) AS i
     LEFT JOIN Deleted d ON i.ID=d.ID
+    LEFT JOIN Obchodnik oi ON oi.ID=i.Prodejce
+    LEFT JOIN Obchodnik od ON od.ID=d.Prodejce
   end
 
   IF UPDATE(Disponent)
   begin
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
-    SELECT 'Firma', 'Disponent', i.ID, d.Disponent, i.Disponent, (SELECT MAX(ID)+1 FROM Historie)
+    SELECT 'Firma', 'Disponent', i.ID, od.Prijmeni, oi.Prijmeni, (SELECT MAX(ID) FROM Historie) + ROW_NUMBER() OVER (ORDER BY (select 1))
     FROM
     ( SELECT ID,Disponent FROM Inserted
       EXCEPT
       SELECT ID,Disponent FROM Deleted) AS i
     LEFT JOIN Deleted d ON i.ID=d.ID
+    LEFT JOIN Obchodnik oi ON oi.ID=i.Disponent
+    LEFT JOIN Obchodnik od ON od.ID=d.Disponent
   end
 
   IF UPDATE(Priorita)
   begin
     INSERT INTO Historie (Tabulka, Sloupec, Radek, Stare, Nove, ID)
-    SELECT 'Firma', 'Priorita', i.ID, d.Priorita, i.Priorita, (SELECT MAX(ID)+1 FROM Historie)
+    SELECT 'Firma', 'Priorita', i.ID, d.Priorita, i.Priorita, (SELECT MAX(ID) FROM Historie) + ROW_NUMBER() OVER (ORDER BY (select 1))
     FROM
     ( SELECT ID,Priorita FROM Inserted
       EXCEPT
@@ -137,4 +141,18 @@ UPDATE Historie SET Uzivatel=stuff(Uzivatel, 1, charindex('\', Uzivatel), '');
 BEGIN TRAN
   DELETE FROM Historie WHERE stare='<neexistujici firma>' --AND Sloupec<>'Kategorie';
   SELECT * FROM Historie;
+ROLLBACK
+
+BEGIN TRAN
+update Historie set 
+Stare=Prijmeni
+from Historie h join Obchodnik o ON o.ID=h.Stare
+where Sloupec in ('Prodejce', 'Disponent')
+
+update Historie set 
+Nove=Prijmeni
+from Historie h join Obchodnik o ON o.ID=h.Nove
+where Sloupec in ('Prodejce', 'Disponent')
+
+SELECT * FROM Historie;
 ROLLBACK
