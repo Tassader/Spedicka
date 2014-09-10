@@ -51,17 +51,24 @@ function createReport($query, $templateName, array $email, $attachmentFormat=NUL
 
     if (!empty($attachmentFormat))
     {
-        $attachment = new Nette\Templating\FileTemplate("templates\\${templateName}_att.phtml");
-        $attachment->registerFilter(new Nette\Latte\Engine);
-        $attachment->rows = $rows;
-        $attachment->time = time();
-        $attachment->registerHelperLoader('Nette\Templating\DefaultHelpers::loader');
         switch ($attachmentFormat)
         {
             case 'xls':
+                $attachment = new Nette\Templating\FileTemplate("templates\\${templateName}_att.phtml");
+                $attachment->registerFilter(new Nette\Latte\Engine);
+                $attachment->rows = $rows;
+                $attachment->time = time();
+                $attachment->registerHelperLoader('Nette\Templating\DefaultHelpers::loader');
+
                 $mail->addAttachment("$templateName.xls", $attachment, 'application/vnd.ms-excel');
                 break;
             case 'pdf':
+                $attachment = new Nette\Templating\FileTemplate("templates\\${templateName}_att.phtml");
+                $attachment->registerFilter(new Nette\Latte\Engine);
+                $attachment->rows = $rows;
+                $attachment->time = time();
+                $attachment->registerHelperLoader('Nette\Templating\DefaultHelpers::loader');
+
                 /*$pdf=new mPDF();
                 //$pdf->debug = true;
                 $pdf->ignore_invalid_utf8 = true;
@@ -74,6 +81,11 @@ function createReport($query, $templateName, array $email, $attachmentFormat=NUL
                 $pdf->AddPage();
                 $pdf->WriteHTML(iconv('UTF-8', 'windows-1252//TRANSLIT', $attachment)); // fpdf is windows-1252 only
                 $mail->addAttachment("$templateName.pdf", $pdf->Output("$templateName.pdf",'S'));
+                break;
+            case 'xls-new':
+                include "templates\\${templateName}_att.php";
+                //$attachment = '';
+                $mail->addAttachment("$templateName.xls", $attachment, 'application/vnd.ms-excel');
                 break;
         }
     }
