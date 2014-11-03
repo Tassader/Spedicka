@@ -1,0 +1,2 @@
+ALTER TABLE Firma ADD BLAddress nvarchar(255) SPARSE NULL;
+ALTER TABLE Firma ADD AWBAddress nvarchar(255) SPARSE NULL;

@@ -74,7 +74,7 @@ GRANT SELECT, REFERENCES, DELETE, INSERT         ON CelniUrad TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON DruhKusu TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON DruhPrepravy TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Firma TO prima_spolecne; -- nejde dát revoke na sloupec
-GRANT                                     UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,KategorieCRM,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas,Disponent,PojisteniPlatneDo,PojisteniCastkaCelkem,PojisteniCastka,PojisteniMena) TO prima_spolecne;
+GRANT                                     UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,KategorieCRM,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas,Disponent,PojisteniPlatneDo,PojisteniCastkaCelkem,PojisteniCastka,PojisteniMena,BLAddress,AWBAddress) TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON FirmaSOP TO prima_spolecne;
 GRANT SELECT, REFERENCES                         ON Historie TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Incoterms TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
