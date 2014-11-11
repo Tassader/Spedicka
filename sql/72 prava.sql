@@ -47,11 +47,13 @@ exec #droprole prima_spolecne;
 exec #droprole prima_overseas;
 exec #droprole prima_road;
 exec #droprole prima_AT;
+exec #droprole prima_WH;
 GO
 CREATE ROLE prima_spolecne;
 CREATE ROLE prima_overseas;
 CREATE ROLE prima_road;
 CREATE ROLE prima_AT;
+CREATE ROLE prima_WH;
 -- ucto a man budou asi zatim i nadale mit datareader+datawriter :)
 -- CREATE ROLE prima_ucto;
 GO
@@ -66,6 +68,8 @@ exec sp_addrolemember 'prima_overseas', 'Praha';
 exec sp_addrolemember 'prima_road', 'Hradec';
 
 exec sp_addrolemember 'prima_AT', 'AMTrucking';
+
+exec sp_addrolemember 'prima_WH', 'AMTrucking';
 --
 -- nefunguje REVOKE ALL FROM prima_spolecne;
 --
@@ -173,6 +177,19 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NakladyKCAT TO prima_AT;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON PrepravaFullAT TO prima_AT;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON VynosyKCAT TO prima_AT;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON ZiskPreprava_AT TO prima_AT;
+
+--WH
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON KontejnerWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NakladyWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON PrepravaWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON VynosyWH TO prima_WH;
+-- views:
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneNakladyWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneVynosyWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NakladyKCWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON PrepravaFullWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON VynosyKCWH TO prima_WH;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON ZiskPreprava_WH TO prima_WH;
 
 
 /*
