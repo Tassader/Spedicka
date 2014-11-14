@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Rozvozy</title>
+    <style>
+    td { Text-align: right; }
+    body { font-family: Arial; }
+    </style>
+</head>
+<body>
+<!--p>Rozvozy od {$time|date:'d.n.Y'} do {$time+14*86400|date:'d.n.Y'}:</p-->
+<table border="1" cellspacing="0" cellpadding="4" style="border: 1px solid black">
+<tr>
+    <th>Přeprava</th>
+    <th>Zákazník</th>
+    <th>Disponent</th>
+    <th>ETAPrg Rok</th>
+    <th>ETAPrg Týden</th>
+    <th>EtaPrg</th>
+    <th>Kontejner</th>
+    <th>Typ Kontejneru</th>
+    <th>Počet nákl. kusů</th>
+    <th>Druh nákl. kusů</th>
+    <th>Gross Weight</th>
+    <th>Volume Veight</th>
+    <th>CBM</th>
+    <th>Vykl. Město</th>
+    <th>Vykl. PSČ</th>
+    <th>Carrier</th>
+</tr>
+<tr n:foreach="$rows as $row">
+    <td>{$row[Cislo]}</td>
+    <td>{$row[Zakaznik]}</td>
+    <td>{$row[Disponent]}</td>
+    <td>{$row[ETAPrgYear]}</td>
+    <td>{$row[ETAPrgWeek]}</td>
+    <td>{$row[ETAPrg]|date:'d.n.Y'}</td>
+    <td>{$row[Kontejner]}</td>
+    <td>{$row[Typ]}</td>
+    <td>{$row[PocetKusu]}</td>
+    <td>{$row[Druh]}</td>
+    <td>{$row[GrossWeight]|number:2:',':' '}</td>
+    <td>{$row[VolumeWeight]|number:2:',':' '}</td>
+    <td>{$row['CBM']|number:2:',':' '}</td>
+    <td>{$row[Mesto]}</td>
+    <td>{$row['PSC']}</td>
+    <td>{$row[Carrier]}</td>
+</tr>
+</table>
+</body>
+</html>

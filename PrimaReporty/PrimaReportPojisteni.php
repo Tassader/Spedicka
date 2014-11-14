@@ -1,6 +1,6 @@
 <?php
-require_once "PrimaReporty.class.php";
 require_once "config.php";
+require_once "PrimaReporty.class.php";
 error_reporting(E_ALL &~ E_DEPRECATED);
 
 $pr=new PrimaReporty;
