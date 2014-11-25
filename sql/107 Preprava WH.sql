@@ -317,7 +317,7 @@ SELECT
     SUM(CastkaKC) AS CastkaKC
 --    ,SUM(n.CastkaUSD) AS NakladyUSD
 --    ,SUM(n.CastkaEUR) AS NakladyEUR
-FROM NakladyKC
+FROM NakladyKCWH
 GROUP BY Preprava
 GO
 
