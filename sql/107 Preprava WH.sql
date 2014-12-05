@@ -251,7 +251,7 @@ GROUP BY Preprava
 GO*/
 
 -- VynosyKCWH
-CREATE VIEW [VynosyKCWH] 
+CREATE VIEW [VynosyKCWH] -- WITH SCHEMABINDING 
 AS
 SELECT *,
     Castka*Kurz AS CastkaKC, 
