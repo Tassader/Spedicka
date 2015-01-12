@@ -19,6 +19,6 @@ SELECT * FROM PojisteniReport
 ORDER BY DatumNakladky
 ",
                   "report-pojisteni",  
-                  array(/**/"m.kollingerova@greco.cz", "m.zikmundova@greco.cz", "Premysl Hanak <premysl.hanak@primalogistics.cz>", "gabriela.vavru@primalogistics.cz", "lukas.matousek@primalogistics.cz" /** /"tomas.zadrazil@centrum.cz"/**/),
+                  array(/**/"m.kollingerova@greco.cz", "m.zikmundova@greco.cz", "Premysl Hanak <premysl.hanak@primalogistics.cz>", "gabriela.vavru@primalogistics.cz", "lukas.matousek@primalogistics.cz", /**/"tomas.zadrazil@primalogistics.cz"/**/),
                   "xls-new");
 ?>
