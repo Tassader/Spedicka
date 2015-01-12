@@ -19,7 +19,7 @@
 <?php
     $db=New PDO("sqlsrv:server=192.168.88.100\PRIMA;Database=PrimaSpedicka");
 
-    $query=$db->query("select * from UpominkyChyby ORDER BY datum");
+    $query=$db->query("select TOP 100 * from UpominkyChyby ORDER BY datum DESC");
 while ($row=$query->fetch())
 {
 ?>
@@ -45,7 +45,7 @@ while ($row=$query->fetch())
 <?php
     //$db=New PDO("sqlsrv:server=192.168.88.100\PRIMA;Database=PrimaSpedicka");
 
-    $query=$db->query("select * from UpominkyOdeslane ORDER BY datum");
+    $query=$db->query("select TOP 100 * from UpominkyOdeslane ORDER BY datum DESC");
 while ($row=$query->fetch())
 {
 ?>
