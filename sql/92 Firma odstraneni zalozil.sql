@@ -1,0 +1,8 @@
+-- na server později
+BEGIN TRANSACTION
+GO
+ALTER TABLE Firma DROP CONSTRAINT DF_Firma_Zalozil
+ALTER TABLE Firma DROP CONSTRAINT DF_Firma_ZalozilCas
+GO
+ALTER TABLE Firma DROP COLUMN Zalozil, ZalozilCas;
+COMMIT
