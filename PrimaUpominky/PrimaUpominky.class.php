@@ -108,7 +108,8 @@ function getFilename($filename_mask)
     {
         if (!in_array($file, $filesDone) && is_readable($file))
         {
-            $this->db->query("INSERT INTO UpominkyZpracovaneSoubory (soubor, datum) VALUES ('$file', CURRENT_TIMESTAMP)") or $this->_reportError(var_dump($this->db->errorInfo()));
+            //echo "INSERT INTO UpominkyZpracovaneSoubory (soubor, datum) VALUES ('$file', CURRENT_TIMESTAMP)";
+            $this->db->query('INSERT INTO UpominkyZpracovaneSoubory (soubor, datum) VALUES (\'' . iconv('cp1250', 'UTF-8//TRANSLIT', $file) . '\', CURRENT_TIMESTAMP)') or $this->_reportError(var_dump($this->db->errorInfo()));
             return $file;
         }
     }
@@ -253,7 +254,7 @@ function sendReminder($days, $reminderNum/*, $text*/)
             }
             catch(Exception $e)
             {
-                $this->_reportError('Chyba pøi odesílání: '.$e->GetMessage(),$pohledavka['cislo_faktury']);
+                $this->_reportError('Chyba pri odesilani: '.$e->GetMessage(),$pohledavka['cislo_faktury']);
             }
             //$remindersToSend[$firma]['email']=$this->remindersArray[$firma]['email'];
         }
@@ -292,13 +293,14 @@ protected function _reallySendReminder(array $email, $reminder, $reminderNum)
         }
         else
         {
-            $invoice_filename='Faktura_v_cizí_mìnì_'.$invoice['cislo_faktury'].'.pdf';
+            //$invoice_filename='Faktura_v_cizí_mìnì_'.$invoice['cislo_faktury'].'.pdf';
+            $invoice_filename='Faktura_v_cizí_mìnì_*'.$invoice['cislo_faktury'].'.pdf';
         }
         //print($invoice_filename);
         $invoice_file_arr=glob($this->invoicePath.$invoice_filename);
         if (!is_array($invoice_file_arr)||count($invoice_file_arr)<1)
         {
-            $this->_reportError('Soubor s fakturou nenalezen: '.$invoice_filename,$invoice['cislo_faktury']);
+            $this->_reportError('Soubor s fakturou nenalezen: '.iconv('cp1250', 'UTF-8//TRANSLIT', $invoice_filename),$invoice['cislo_faktury']);
             continue;
         }
         $invoice_file=$invoice_file_arr[0];
