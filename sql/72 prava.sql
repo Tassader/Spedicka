@@ -82,6 +82,7 @@ GRANT                                     UPDATE ON Firma (ID,Firma,ICO,Priorita
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON FirmaSOP TO prima_spolecne;
 GRANT SELECT, REFERENCES                         ON Historie TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Incoterms TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
+GRANT SELECT, REFERENCES, DELETE, INSERT         ON KategorieCRM TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Kontakt TO prima_spolecne;
 GRANT SELECT, REFERENCES                         ON Kurzy TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Misto TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
@@ -210,6 +211,7 @@ GRANT UPDATE ON CelniUrad TO prima_ucto;
 GRANT UPDATE ON DruhKusu TO prima_ucto;
 GRANT UPDATE ON DruhPrepravy TO prima_ucto;
 GRANT UPDATE ON Incoterms TO prima_ucto;
+GRANT UPDATE ON KategorieCRM TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT UPDATE ON Misto TO prima_ucto;
 GRANT UPDATE ON Nastaveni TO prima_ucto;
 GRANT UPDATE ON Obchodnik TO prima_ucto;
@@ -223,6 +225,7 @@ GRANT UPDATE ON Terminal TO prima_ucto;
 GRANT UPDATE ON TypAktivity TO prima_ucto;
 GRANT UPDATE ON TypKontejneru TO prima_ucto;
 GRANT UPDATE ON TypMnozstvi TO prima_ucto;
+
 
 
 -- asi nepotrebne
