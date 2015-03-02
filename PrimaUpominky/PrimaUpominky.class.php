@@ -267,7 +267,7 @@ protected function _reallySendReminder(array $email, $reminder, $reminderNum)
     $template->registerFilter(new Nette\Latte\Engine);
     $template->reminder = $reminder;
     $template->email = implode(",",$email);
-    $template->registerHelperLoader('Nette\Templating\DefaultHelpers::loader');
+    $template->registerHelperLoader('Nette\Templating\Helpers::loader');
     //$template->setCacheStorage($context->templateCacheStorage);
 
     $mail = new Nette\Mail\Message;
