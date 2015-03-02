@@ -305,7 +305,7 @@ protected function _reallySendReminder(array $email, $reminder, $reminderNum)
         }
         $invoice_file=$invoice_file_arr[0];
         //print($invoice_file);
-        $mail->addAttachment($invoice_file);
+        $mail->addAttachment($invoice_file, NULL, 'application/pdf');
     }
 
     $this->smtpMailer->send($mail);
