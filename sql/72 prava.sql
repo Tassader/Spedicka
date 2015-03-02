@@ -86,19 +86,16 @@ GRANT SELECT, REFERENCES, DELETE, INSERT         ON KategorieCRM TO prima_spolec
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Kontakt TO prima_spolecne;
 GRANT SELECT, REFERENCES                         ON Kurzy TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Misto TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Nabidka TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR2 TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR2Specifikace TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaKontejnery TO prima_spolecne;
-GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaLCL TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Nastaveni TO prima_spolecne; -- nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Obchodnik TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
+GRANT SELECT, REFERENCES, DELETE, INSERT         ON OdvetviFirem TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
+
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Potencial TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON PravidelnostPotencialu TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Prilezitosti TO prima_spolecne;
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON RatingPrilezitosti TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Sluzba TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
+GRANT SELECT, REFERENCES, DELETE, INSERT         ON SpecializaceFirem TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Stat TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON StavPrepravy TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON StavPrilezitosti TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
@@ -135,6 +132,12 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Preprava TO prima_overseas;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Vynosy TO prima_overseas;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Pojisteni TO prima_overseas;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Skody TO prima_overseas;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON Nabidka TO prima_overseas;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR TO prima_overseas;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR2 TO prima_overseas;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR2Specifikace TO prima_overseas;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaKontejnery TO prima_overseas;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaLCL TO prima_overseas;
 -- views:
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneKontejnery TO prima_overseas;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneNaklady TO prima_overseas;
@@ -153,6 +156,8 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON PrepravaSil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON VynosySil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON PojisteniSil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON SkodySil TO prima_road;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaSil TO prima_road;
+GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaSilNakladky TO prima_road;
 -- views:
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneKontejnerySil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneNakladySil TO prima_road;
@@ -164,7 +169,6 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON VynosyKCSil TO prima_road;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON ZiskPreprava_Road TO prima_road;
 
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON VykonDopravceSil TO prima_road;
-
 -- AT
 -- agregovanekontejneryat jsem asi nedelal
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON KontejnerAT TO prima_AT;
@@ -215,9 +219,11 @@ GRANT UPDATE ON KategorieCRM TO prima_spolecne; -- ciselnik => nedovolit menit o
 GRANT UPDATE ON Misto TO prima_ucto;
 GRANT UPDATE ON Nastaveni TO prima_ucto;
 GRANT UPDATE ON Obchodnik TO prima_ucto;
+GRANT UPDATE ON OdvetviFirem TO prima_ucto;
 GRANT UPDATE ON PravidelnostPotencialu TO prima_ucto;
 GRANT UPDATE ON RatingPrilezitosti TO prima_ucto;
 GRANT UPDATE ON Sluzba TO prima_ucto;
+GRANT UPDATE ON SpecializaceFirem TO prima_ucto;
 GRANT UPDATE ON Stat TO prima_ucto;
 GRANT UPDATE ON StavPrepravy TO prima_ucto;
 GRANT UPDATE ON StavPrilezitosti TO prima_ucto;
