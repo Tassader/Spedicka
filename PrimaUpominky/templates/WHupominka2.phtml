@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Druhá upomínka uhrazení faktury</title>
+    <style>
+    td { Text-align: right; }
+    body { font-family: Arial; }
+    </style>
+</head>
+<body>
+{include 'poznamka.include.phtml'}
+<p>Vážený zákazníku,</p>
+<p>i přes první upomínku jsme od Vás doposud neobdrželi platbu za následující fakturu (faktury):</p>
+<table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
+<tr>
+    <th>Číslo faktury</th>
+    <th>Zakázka</th>
+    <th>Datum vystavení</th>
+    <th>Splatno</th>
+    <th>Fakturováno</th>
+    <th>Měna</th>
+    <th>V Kč</th>
+    <th>K likvidaci v Kč</th>
+    <th>Po splatnosti dnů</th>
+</tr>
+<tr n:foreach="$reminder as $row">
+    <td>{$row[cislo_faktury]}&nbsp;</td>
+    <td>{$row[zakazka]}&nbsp;</td>
+    <td>{$row[datum_vystaveni]}&nbsp;</td>
+    <td>{$row[datum_splatnosti]}&nbsp;</td>
+    <td>{$row[fakturovano]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[mena]}&nbsp;</td>
+    <td>{$row[celkem_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[k_likvidaci_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[po_splatnosti]}&nbsp;</td>
+</tr>
+</table>
+<p>Žádáme Vás tímto o uhrazení dlužné částky nejpozději do sedmi kalendářních dnů.</p>
+<p>Pokud do stanovené doby faktury neuhradíte, budeme nuceni dlužnou částku vymáhat soudní cestou.</p>
+<p>Dále upozorňujeme, že Vám vyúčtujeme penále za každý den prodlení ve výši 0,1 % z celkové dlužné částky za každý den prodlení.</p>
+<p>S pozdravem<br />
+Prima Warehousing and Distribution s.r.o. <br />
+U Prioru 1076/5<br />
+161 00  Praha 6<br />
+IČ: 243 11 111<br />
+</p>
+<p>
+<strong>Kontaktní údaje:</strong><br />
+Účtárna Prima Warehousing and Distribution:<br />
+Email: uctarna@primawad.cz<br />
+</p>
+</body>
+</html>

@@ -10,6 +10,11 @@ class PrimaUpominky{
  */
 protected $db;
 /**
+ * db tables and templates prefix
+ * @var string
+ */
+protected $prefix='';
+/**
  * Prepared statement for getting processed files
  * @var PDOStatement
  */
@@ -53,16 +58,31 @@ protected $smtpParams=array();
  */
 protected $smtpMailer;
 
+protected $from;
+protected $bcc;
+
+function setPrefix($prefix){
+    $this->prefix=$prefix;
+}
+
+function setFrom($from){
+    $this->from=$from;
+}
+
+function setBcc($bcc){
+    $this->bcc=$bcc;
+}
+
 //sqlsrv:server=hostname_or_ip;Database=database_name;
 function connectToDb($dsn, $username=NULL, $password=NULL, array $atd=NULL)
 {
     $this->db=New PDO($dsn, $username, $password, $atd);
 
     // prepare prepared statements, so they're prepared :D
-    $this->stGetFiles=$this->db->prepare('SELECT soubor FROM UpominkyZpracovaneSoubory');
-    $this->stGetReminders=$this->db->prepare('SELECT DISTINCT faktura/*, email*/ FROM UpominkyOdeslane WHERE upominka=? OR datum > dateadd(day,-2,CURRENT_TIMESTAMP)'); // 9.9. pøidáno to za OR (aby se neposílaly 2 rùzné upomínky stejné faktury bìhem 48h)
+    $this->stGetFiles=$this->db->prepare('SELECT soubor FROM '.$this->prefix.'UpominkyZpracovaneSoubory');
+    $this->stGetReminders=$this->db->prepare('SELECT DISTINCT faktura/*, email*/ FROM '.$this->prefix.'UpominkyOdeslane WHERE upominka=? OR datum > dateadd(day,-2,CURRENT_TIMESTAMP)'); 9.9. pøidáno to za OR (aby se neposílaly 2 rùzné upomínky stejné faktury bìhem 48h)
                       // TODO mozna zoptimalizovat, protoze to tech faktur bude casem vracet hodne (takze treba jen faktury za poslednich x mesicu?)
-    $this->stSaveReminder=$this->db->prepare('INSERT INTO UpominkyOdeslane (faktura, datum, upominka, email) VALUES (?, CURRENT_TIMESTAMP, ?, ?)');
+    $this->stSaveReminder=$this->db->prepare('INSERT INTO '.$this->prefix.'UpominkyOdeslane (faktura, datum, upominka, email) VALUES (?, CURRENT_TIMESTAMP, ?, ?)');
     //$this->stGetCompanyDetails=$this->db->prepare('SELECT TOP 1 k.email FROM Firma f join Kontakt k ON k.Firma=f.ID WHERE f.Firma LIKE ? ORDER BY k.ID'); // TODO pokud ma firma vic kontaktu, preskocit ty bez vyplneneho emailu - hotovo :)
     //$this->stGetCompanyDetails=$this->db->prepare('SELECT TOP 1 k.email FROM Firma f /*LEFT*/ join Kontakt k ON k.Firma=f.ID WHERE f.Firma LIKE ? AND (k.email IS NOT NULL /*OR k.id IS NULL*/) ORDER BY k.ID');
     //nebo podle ICO
@@ -109,7 +129,7 @@ function getFilename($filename_mask)
         if (!in_array($file, $filesDone) && is_readable($file))
         {
             //echo "INSERT INTO UpominkyZpracovaneSoubory (soubor, datum) VALUES ('$file', CURRENT_TIMESTAMP)";
-            $this->db->query('INSERT INTO UpominkyZpracovaneSoubory (soubor, datum) VALUES (\'' . iconv('cp1250', 'UTF-8//TRANSLIT', $file) . '\', CURRENT_TIMESTAMP)') or $this->_reportError(var_dump($this->db->errorInfo()));
+            $this->db->query('INSERT INTO '.$this->prefix.'UpominkyZpracovaneSoubory (soubor, datum) VALUES (\'' . iconv('cp1250', 'UTF-8//TRANSLIT', $file) . '\', CURRENT_TIMESTAMP)') or $this->_reportError(var_dump($this->db->errorInfo()));
             return $file;
         }
     }
@@ -263,7 +283,7 @@ function sendReminder($days, $reminderNum/*, $text*/)
 
 protected function _reallySendReminder(array $email, $reminder, $reminderNum)
 {
-    $template = new Nette\Templating\FileTemplate('templates\upominka'.$reminderNum.'.phtml');
+    $template = new Nette\Templating\FileTemplate('templates\\'.$this->prefix.'upominka'.$reminderNum.'.phtml');
     $template->registerFilter(new Nette\Latte\Engine);
     $template->reminder = $reminder;
     $template->email = implode(",",$email);
@@ -271,12 +291,11 @@ protected function _reallySendReminder(array $email, $reminder, $reminderNum)
     //$template->setCacheStorage($context->templateCacheStorage);
 
     $mail = new Nette\Mail\Message;
-
-    $mail->setFrom('PrimaLogistics,s.r.o. <upominky@primalogistics.cz>') //TODO do konfigurace
+    $mail->setFrom($this->from)
         //->addTo('tomas.zadrazil@centrum.cz')
         //->addTo('premysl.hanak@primalogistics.cz')
         //->addTo('jaroslav.zoubek@primalogistics.cz')
-        ->addBCC('upominky@primalogistics.cz')
+        ->addBCC($this->bcc)
         ->setHtmlBody($template);
 
     foreach ($email as $email_address)
@@ -339,7 +358,7 @@ protected function _checkEmailAddress($address)
 
 protected function _reportError($popis, $faktura=null)
 {
-    $this->db->query('INSERT INTO UpominkyChyby (faktura, datum, popis) VALUES ('.$this->db->quote($faktura).', CURRENT_TIMESTAMP, '.$this->db->quote($popis).')');
+    $this->db->query('INSERT INTO '.$this->prefix.'UpominkyChyby (faktura, datum, popis) VALUES ('.$this->db->quote($faktura).', CURRENT_TIMESTAMP, '.$this->db->quote($popis).')');
     print(date('Ymd') . " chyba: $popis (faktura:$faktura)\n");
 }
 
