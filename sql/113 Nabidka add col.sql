@@ -1,16 +1,19 @@
-ALTER TABLE Nabidka ADD FCL1 int SPARSE NULL;
-ALTER TABLE Nabidka ADD FCL2 int SPARSE NULL;
-ALTER TABLE Nabidka ADD FCL3 int SPARSE NULL;
-ALTER TABLE Nabidka ADD FCL4 int SPARSE NULL;
+ALTER TABLE Nabidka ADD FCL1 nvarchar(50) SPARSE NULL;
+ALTER TABLE Nabidka ADD FCL2 nvarchar(50) SPARSE NULL;
+ALTER TABLE Nabidka ADD FCL3 nvarchar(50) SPARSE NULL;
+ALTER TABLE Nabidka ADD FCL4 nvarchar(50) SPARSE NULL;
 ALTER TABLE Nabidka ADD Agent1 nvarchar(50) SPARSE NULL;
 ALTER TABLE Nabidka ADD Zasilka nvarchar(50) SPARSE NULL;
 GO
 
-ALTER TABLE Nabidka WITH CHECK ADD CONSTRAINT FK_Nabidka_TypKontejneru1
-    FOREIGN KEY ( FCL1 ) REFERENCES TypKontejneru ( ID );-- ON DELETE CASCADE;
-ALTER TABLE Nabidka WITH CHECK ADD CONSTRAINT FK_Nabidka_TypKontejneru2
-    FOREIGN KEY ( FCL2 ) REFERENCES TypKontejneru ( ID );-- ON DELETE CASCADE;
-ALTER TABLE Nabidka WITH CHECK ADD CONSTRAINT FK_Nabidka_TypKontejneru3
-    FOREIGN KEY ( FCL3 ) REFERENCES TypKontejneru ( ID );-- ON DELETE CASCADE;
-ALTER TABLE Nabidka WITH CHECK ADD CONSTRAINT FK_Nabidka_TypKontejneru4
-    FOREIGN KEY ( FCL4 ) REFERENCES TypKontejneru ( ID );-- ON DELETE CASCADE;
+CREATE TABLE [TypKontejneruNabidky](
+	[ID] [smallint] IDENTITY(1,1) NOT NULL,
+	[Typ] [nvarchar](255) NOT NULL,
+ CONSTRAINT [TypKontejneruNabidky_PK] PRIMARY KEY NONCLUSTERED ([ID] ASC)
+)
+GO
+
+INSERT INTO TypKontejneruNabidky (/*ID, */Typ) VALUES ('20''DC<14t');
+INSERT INTO TypKontejneruNabidky (/*ID, */Typ) VALUES ('20''DC<25t');
+INSERT INTO TypKontejneruNabidky (/*ID, */Typ) VALUES ('40''DC<27t');
+INSERT INTO TypKontejneruNabidky (/*ID, */Typ) VALUES ('40''HC<27t');
