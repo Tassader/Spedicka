@@ -80,7 +80,7 @@ function connectToDb($dsn, $username=NULL, $password=NULL, array $atd=NULL)
 
     // prepare prepared statements, so they're prepared :D
     $this->stGetFiles=$this->db->prepare('SELECT soubor FROM '.$this->prefix.'UpominkyZpracovaneSoubory');
-    $this->stGetReminders=$this->db->prepare('SELECT DISTINCT faktura/*, email*/ FROM '.$this->prefix.'UpominkyOdeslane WHERE upominka=? OR datum > dateadd(day,-2,CURRENT_TIMESTAMP)'); 9.9. pøidáno to za OR (aby se neposílaly 2 rùzné upomínky stejné faktury bìhem 48h)
+    $this->stGetReminders=$this->db->prepare('SELECT DISTINCT faktura/*, email*/ FROM '.$this->prefix.'UpominkyOdeslane WHERE upominka=? OR datum > dateadd(day,-2,CURRENT_TIMESTAMP)'); //9.9. pøidáno to za OR (aby se neposílaly 2 rùzné upomínky stejné faktury bìhem 48h)
                       // TODO mozna zoptimalizovat, protoze to tech faktur bude casem vracet hodne (takze treba jen faktury za poslednich x mesicu?)
     $this->stSaveReminder=$this->db->prepare('INSERT INTO '.$this->prefix.'UpominkyOdeslane (faktura, datum, upominka, email) VALUES (?, CURRENT_TIMESTAMP, ?, ?)');
     //$this->stGetCompanyDetails=$this->db->prepare('SELECT TOP 1 k.email FROM Firma f join Kontakt k ON k.Firma=f.ID WHERE f.Firma LIKE ? ORDER BY k.ID'); // TODO pokud ma firma vic kontaktu, preskocit ty bez vyplneneho emailu - hotovo :)
