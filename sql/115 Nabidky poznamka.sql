@@ -1,0 +1,1 @@
+ALTER TABLE Nabidka ALTER COLUMN Poznamka nvarchar(4000) NULL;
