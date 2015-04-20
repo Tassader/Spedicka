@@ -126,10 +126,11 @@ function getFilename($filename_mask)
     //print_r($filesDone);
     foreach($files as $file)
     {
-        if (!in_array($file, $filesDone) && is_readable($file))
+    		$file_utf8 = iconv('cp1250', 'UTF-8//TRANSLIT', $file);
+        if (!in_array($file_utf8, $filesDone) && is_readable($file))
         {
-            //echo "INSERT INTO UpominkyZpracovaneSoubory (soubor, datum) VALUES ('$file', CURRENT_TIMESTAMP)";
-            $this->db->query('INSERT INTO '.$this->prefix.'UpominkyZpracovaneSoubory (soubor, datum) VALUES (\'' . iconv('cp1250', 'UTF-8//TRANSLIT', $file) . '\', CURRENT_TIMESTAMP)') or $this->_reportError(var_dump($this->db->errorInfo()));
+            //echo 'INSERT INTO '.$this->prefix.'UpominkyZpracovaneSoubory (soubor, datum) VALUES (\'' . $file_utf8 . '\', CURRENT_TIMESTAMP)';
+            $this->db->query('INSERT INTO '.$this->prefix.'UpominkyZpracovaneSoubory (soubor, datum) VALUES (\'' . $file_utf8 . '\', CURRENT_TIMESTAMP)') or $this->_reportError(var_dump($this->db->errorInfo()));
             return $file;
         }
     }
