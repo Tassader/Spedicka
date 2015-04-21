@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Upomínka uhrazení faktury / Reminder for overdue invoice</title>
+    <title>Druhá upomínka uhrazení faktury / Second reminder for overdue invoice</title>
     <style>
     td { Text-align: right; }
     body { font-family: Arial; }
@@ -10,7 +10,7 @@
 <body>
 {include 'poznamka.include.phtml'}
 <p>Vážený zákazníku,</p>
-<p>při kontrole účetních dokladů jsme zjistili, že nám doposud nebyly uhrazeny následující faktury, které jsou po splatnosti:</p>
+<p>i přes první upomínku jsme od Vás doposud neobdrželi platbu za následující fakturu (faktury):</p>
 <table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
 <tr>
     <th>Číslo faktury</th>
@@ -35,12 +35,14 @@
     <td>{$row[po_splatnosti]}&nbsp;</td>
 </tr>
 </table>
-<p>Věříme, že se jedná pouze o nedorozumění a žádáme o úhradu v co nejbližším termínu. Pokud již byla platba uskutečněna, berte prosím tuto upomínku jako bezpředmětnou.</p>
+<p>Žádáme Vás tímto o uhrazení dlužné částky nejpozději do sedmi kalendářních dnů.</p>
+<p>Pokud do stanovené doby faktury neuhradíte, budeme nuceni dlužnou částku vymáhat soudní cestou.</p>
+<p>Dále upozorňujeme, že Vám vyúčtujeme úrok z prodlení ve výši 0,05 % denně z celkové dlužné částky.</p>
 <p>S pozdravem<br />
-Prima Logistics, s.r.o.<br />
+Prima Air Sea, s.r.o.<br />
 U Prioru 1076/5<br />
 161 00  Praha 6<br />
-IČ: 282 39 881<br />
+IČ: 024 98 391<br />
 </p>
 <p>
 <strong>Kontaktní údaje:</strong><br />
@@ -53,7 +55,7 @@ Email: katerina.bartosova@primalogistics.cz<br />
 <br />
 
 <p>Dear customer.</p>
-<p>According to our records, we have not yet received a remittance following invoice(s):</p>
+<p>Despite the first reminder, we have still not received a remittance following invoice(s):</p>
 <table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
 <tr>
     <th>Invoice number</th>
@@ -78,13 +80,15 @@ Email: katerina.bartosova@primalogistics.cz<br />
     <td>{$row[po_splatnosti]}&nbsp;</td>
 </tr>
 </table>
-<p>If you have already paid this invoice, please accept our thanks and disregard this letter. Otherwise, please send the payment promptly.</p>
+<p>We ask you for this outstanding amount to be paid within seven calendar days.</p>
+<p>If you do not pay the invoice within stipulated time, we will be forced to recover the amount owed through the courts.</p>
+<p>Also note that will charge you an interest of 0.05% per day of the total outstanding amount.</p>
 <p>Sincerely<br />
-Prima Logistics, s.r.o.<br />
+Prima Air Sea, s.r.o.<br />
 U Prioru 1076/5<br />
 161 00  Praha 6<br />
 Czech Republic<br />
-VAT no: CZ28239881<br />
+VAT no: CZ02498391<br />
 </p>
 <p>
 <strong>Contact information:</strong><br />

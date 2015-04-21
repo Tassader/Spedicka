@@ -11,6 +11,7 @@
 <body>
 <H2>Rozcestník</H2>
 <ul>
+<li><a href="pas.php">Prima Air Sea</a></li>
 <li><a href="prima.php">Prima Logistics</a></li>
 <li><a href="wh.php">Prima Warehousing and Distribution</a></li>
 </ul>

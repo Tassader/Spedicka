@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Druhá upomínka uhrazení faktury</title>
+    <title>Druhá upomínka uhrazení faktury / Second reminder for overdue invoice</title>
     <style>
     td { Text-align: right; }
     body { font-family: Arial; }
@@ -37,7 +37,7 @@
 </table>
 <p>Žádáme Vás tímto o uhrazení dlužné částky nejpozději do sedmi kalendářních dnů.</p>
 <p>Pokud do stanovené doby faktury neuhradíte, budeme nuceni dlužnou částku vymáhat soudní cestou.</p>
-<p>Dále upozorňujeme, že Vám vyúčtujeme penále za každý den prodlení ve výši 0,1 % z celkové dlužné částky za každý den prodlení.</p>
+<p>Dále upozorňujeme, že Vám vyúčtujeme úrok z prodlení ve výši 0,05 % denně z celkové dlužné částky.</p>
 <p>S pozdravem<br />
 Prima Warehousing and Distribution s.r.o. <br />
 U Prioru 1076/5<br />
@@ -46,7 +46,53 @@ IČ: 243 11 111<br />
 </p>
 <p>
 <strong>Kontaktní údaje:</strong><br />
-Účtárna Prima Warehousing and Distribution:<br />
+Kateřina Bartošová<br />
+Senior Accountant<br />
+Email: uctarna@primawad.cz<br />
+</p>
+
+<br />
+
+<p>Dear customer.</p>
+<p>Despite the first reminder, we have still not received a remittance following invoice(s):</p>
+<table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
+<tr>
+    <th>Invoice number</th>
+    <th>Contract</th>
+    <th>Date of issue</th>
+    <th>Due date</th>
+    <th>Invoiced amount</th>
+    <th>Currency</th>
+    <th>In CZK</th>
+    <th>Total due</th>
+    <th>Overdue days</th>
+</tr>
+<tr n:foreach="$reminder as $row">
+    <td>{$row[cislo_faktury]}&nbsp;</td>
+    <td>{$row[zakazka]}&nbsp;</td>
+    <td>{$row[datum_vystaveni]}&nbsp;</td>
+    <td>{$row[datum_splatnosti]}&nbsp;</td>
+    <td>{$row[fakturovano]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[mena]}&nbsp;</td>
+    <td>{$row[celkem_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[k_likvidaci_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[po_splatnosti]}&nbsp;</td>
+</tr>
+</table>
+<p>We ask you for this outstanding amount to be paid within seven calendar days.</p>
+<p>If you do not pay the invoice within stipulated time, we will be forced to recover the amount owed through the courts.</p>
+<p>Also note that will charge you an interest of 0.05% per day of the total outstanding amount.</p>
+<p>Sincerely<br />
+Prima Warehousing and Distribution s.r.o. <br />
+U Prioru 1076/5<br />
+161 00  Praha 6<br />
+Czech Republic<br />
+VAT no: 243 11 111<br />
+</p>
+<p>
+<strong>Contact information:</strong><br />
+Katerina Bartosova<br />
+Senior Accountant<br />
 Email: uctarna@primawad.cz<br />
 </p>
 </body>

@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>První upomínka</title>
+    <title>Upomínka uhrazení faktury / Reminder for overdue invoice</title>
     <style>
     td { Text-align: right; }
     body { font-family: Arial; }
@@ -44,7 +44,51 @@ IČ: 243 11 111<br />
 </p>
 <p>
 <strong>Kontaktní údaje:</strong><br />
-Účtárna Prima Warehousing and Distribution:<br />
+Kateřina Bartošová<br />
+Senior Accountant<br />
+Email: uctarna@primawad.cz<br />
+</p>
+
+<br />
+
+<p>Dear customer.</p>
+<p>According to our records, we have not yet received a remittance following invoice(s):</p>
+<table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
+<tr>
+    <th>Invoice number</th>
+    <th>Contract</th>
+    <th>Date of issue</th>
+    <th>Due date</th>
+    <th>Invoiced amount</th>
+    <th>Currency</th>
+    <th>In CZK</th>
+    <th>Total due</th>
+    <th>Overdue days</th>
+</tr>
+<tr n:foreach="$reminder as $row">
+    <td>{$row[cislo_faktury]}&nbsp;</td>
+    <td>{$row[zakazka]}&nbsp;</td>
+    <td>{$row[datum_vystaveni]}&nbsp;</td>
+    <td>{$row[datum_splatnosti]}&nbsp;</td>
+    <td>{$row[fakturovano]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[mena]}&nbsp;</td>
+    <td>{$row[celkem_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[k_likvidaci_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[po_splatnosti]}&nbsp;</td>
+</tr>
+</table>
+<p>If you have already paid this invoice, please accept our thanks and disregard this letter. Otherwise, please send the payment promptly.</p>
+<p>Sincerely<br />
+Prima Warehousing and Distribution s.r.o. <br />
+U Prioru 1076/5<br />
+161 00  Praha 6<br />
+Czech Republic<br />
+VAT no: 243 11 111<br />
+</p>
+<p>
+<strong>Contact information:</strong><br />
+Katerina Bartosova<br />
+Senior Accountant<br />
 Email: uctarna@primawad.cz<br />
 </p>
 </body>
