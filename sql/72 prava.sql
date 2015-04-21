@@ -102,10 +102,12 @@ GRANT SELECT, REFERENCES, DELETE, INSERT         ON StavPrilezitosti TO prima_sp
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON Terminal TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON TypAktivity TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON TypKontejneru TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
+GRANT SELECT, REFERENCES                         ON TypKontejneruNabidky TO prima_spolecne; -- ciselnik, zatim jen pro overseas
+
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON TypMnozstvi TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON UpominkyChyby TO prima_spolecne; -- nedovolit menit obyc uzivatelum
 GRANT SELECT, REFERENCES, DELETE, INSERT         ON UpominkyOdeslane TO prima_spolecne; -- nedovolit menit obyc uzivatelum
-
+-- TODO upominky PAS, WH, ..., + povolit pouze select, references
 GRANT SELECT, REFERENCES, DELETE, INSERT/*, UPDATE*/ ON Vozidlo TO prima_spolecne; -- ?? povolit upravovat?
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON CenaZaKm TO prima_spolecne; -- ?? povolit upravovat?
 
@@ -140,6 +142,8 @@ GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaAIR2Specifikace TO pr
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaKontejnery TO prima_overseas;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaKuryr TO prima_overseas;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON NabidkaLCL TO prima_overseas;
+GRANT                     DELETE, INSERT, UPDATE ON TypKontejneruNabidky TO prima_spolecne; -- ciselnik, zatim jen pro overseas
+
 -- views:
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneKontejnery TO prima_overseas;
 GRANT SELECT, REFERENCES, DELETE, INSERT, UPDATE ON AgregovaneNaklady TO prima_overseas;
