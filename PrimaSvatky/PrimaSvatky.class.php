@@ -49,31 +49,32 @@ function setSmtpParams($smtpParams)
 
 function sendMail($email)
 {
-    $template = new Nette\Templating\FileTemplate('templates\komplimentka.phtml');
-    $template->registerFilter(new Nette\Latte\Engine);
-    $template->email = $email;
-    $template->registerHelperLoader('Nette\Templating\DefaultHelpers::loader');
-    //$template->setCacheStorage($context->templateCacheStorage);
-
-    $mail = new Nette\Mail\Message;
-    $mail->setFrom('Prima Logistics,s.r.o. <sales@primalogistics.cz>') //TODO do konfigurace
-        ->addTo($email/*, $reminder[0]['firma']*/)
-        //->addTo('tomas.zadrazil@centrum.cz')
-        //->addTo('premysl.hanak@primalogistics.cz')
-        ->addBCC('jaroslav.zoubek@primalogistics.cz')
-        //->addBCC('upominky@primalogistics.cz')
-        ->setHtmlBody($template);
-
-    $mailer = new Nette\Mail\SmtpMailer($this->smtpParams);
-    //alternativa$mailer->send($mail);
-
-    $mail->setMailer($mailer);
     try
     {
+		    $template = new Nette\Templating\FileTemplate('templates\komplimentka.phtml');
+		    $template->registerFilter(new Nette\Latte\Engine);
+		    $template->email = $email;
+		    $template->registerHelperLoader('Nette\Templating\DefaultHelpers::loader');
+		    //$template->setCacheStorage($context->templateCacheStorage);
+
+		    $mail = new Nette\Mail\Message;
+		    $mail->setFrom('Prima Logistics,s.r.o. <sales@primalogistics.cz>') //TODO do konfigurace
+		        ->addTo($email/*, $reminder[0]['firma']*/)
+		        //->addTo('tomas.zadrazil@centrum.cz')
+		        //->addTo('premysl.hanak@primalogistics.cz')
+		        ->addBCC('jaroslav.zoubek@primalogistics.cz')
+		        //->addBCC('upominky@primalogistics.cz')
+		        ->setHtmlBody($template);
+
+		    $mailer = new Nette\Mail\SmtpMailer($this->smtpParams);
+		    //alternativa$mailer->send($mail);
+
+		    $mail->setMailer($mailer);
         $mail->send();
     }
     catch(Exception $e)
     {
+    		print('Chyba pøi odesílání: '.$e->GetMessage());
         //$this->_reportError('Chyba pøi odesílání: '.$e->GetMessage(),$invoice['cislo_faktury']);
     }
     //print($mail->generateMessage()); //toto lze ulozit na P jako *.eml
@@ -107,4 +108,3 @@ protected function _reportError($popis, $faktura=null)
 }
 
 } // Class PrimaUpominky
-//?>
