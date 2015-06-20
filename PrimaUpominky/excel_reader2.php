@@ -914,7 +914,7 @@ class Spreadsheet_Excel_Reader {
 	 * Some basic initialisation
 	 */
 	function Spreadsheet_Excel_Reader($file='',$store_extended_info=true,$outputEncoding='') {
-		$this->_ole =& new OLERead();
+		$this->_ole = new OLERead(); // in PHP 4 "=& new"  may be needed
 		$this->setUTFEncoder('iconv');
 		if ($outputEncoding != '') { 
 			$this->setOutputEncoding($outputEncoding);
