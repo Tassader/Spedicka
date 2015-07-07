@@ -1,0 +1,31 @@
+<p>Vážený zákazníku,</p>
+<p>naposledy Vás tímto upozorňujeme, že jste nám doposud neuhradili následující fakturu (faktury):</p>
+<table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
+<tr>
+    <th>Číslo faktury</th>
+    <th>Zakázka</th>
+    <th>Datum vystavení</th>
+    <th>Splatno</th>
+    <th>Fakturováno</th>
+    <th>Měna</th>
+    <th>V Kč</th>
+    <th>K likvidaci v Kč</th>
+    <th>Po splatnosti dnů</th>
+</tr>
+<tr n:foreach="$reminder as $row">
+    <td>{$row[cislo_faktury]}&nbsp;</td>
+    <td>{$row[zakazka]}&nbsp;</td>
+    <td>{$row[datum_vystaveni]}&nbsp;</td>
+    <td>{$row[datum_splatnosti]}&nbsp;</td>
+    <td>{$row[fakturovano]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[mena]}&nbsp;</td>
+    <td>{$row[celkem_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[k_likvidaci_kc]|number:2:',':' '}&nbsp;</td>
+    <td>{$row[po_splatnosti]}&nbsp;</td>
+</tr>
+</table>
+<p>Žádáme Vás o úhradu dlužné částky do <strong>3 dnů</strong> od obdržení této upomínky a taktéž o zaslání kopie příkazu k úhradě.</p>
+<p>Současně nám nejpozději v téže lhůtě uhraďte také úrok z prodlení v zákonné výši podle nařízení vlády č. 351/2013. Tento činí ročně výši repo sazby stanovené Českou národní bankou pro první den kalendářního pololetí, v němž došlo k prodlení, zvýšené o 8 procentních bodů.</p>
+<p>A dále v uvedené lhůtě uhraďte také náklady na vymáhání pohledávky dle nařízení vlády č. 351/2013 Sb. ve výši 1 200,&ndash; Kč.</p>
+<p>Pokud nebude výše uvedená faktura (faktury) v tomto termínu uhrazena (uhrazeny), budeme nuceni řešit záležitost právní cestou. Tato skutečnost bude představovat navýšení dlužné částky o náklady na právní služby a na soudní poplatek.</p>
+<p>Věříme, že vzhledem k předchozím obchodním vztahům nenecháte tuto kauzu dojít tak daleko a fakturu uhradíte obratem.</p>

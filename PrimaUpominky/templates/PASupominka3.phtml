@@ -9,35 +9,8 @@
 </head>
 <body>
 {include 'poznamka.include.phtml'}
-<p>Vážený zákazníku,</p>
-<p>naposledy Vás tímto upozorňujeme, že jste nám doposud neuhradili následující fakturu (faktury):</p>
-<table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
-<tr>
-    <th>Číslo faktury</th>
-    <th>Zakázka</th>
-    <th>Datum vystavení</th>
-    <th>Splatno</th>
-    <th>Fakturováno</th>
-    <th>Měna</th>
-    <th>V Kč</th>
-    <th>K likvidaci v Kč</th>
-    <th>Po splatnosti dnů</th>
-</tr>
-<tr n:foreach="$reminder as $row">
-    <td>{$row[cislo_faktury]}&nbsp;</td>
-    <td>{$row[zakazka]}&nbsp;</td>
-    <td>{$row[datum_vystaveni]}&nbsp;</td>
-    <td>{$row[datum_splatnosti]}&nbsp;</td>
-    <td>{$row[fakturovano]|number:2:',':' '}&nbsp;</td>
-    <td>{$row[mena]}&nbsp;</td>
-    <td>{$row[celkem_kc]|number:2:',':' '}&nbsp;</td>
-    <td>{$row[k_likvidaci_kc]|number:2:',':' '}&nbsp;</td>
-    <td>{$row[po_splatnosti]}&nbsp;</td>
-</tr>
-</table>
-<p>Žádáme Vás o úhradu dlužné částky do 7 dnů od obdržení této upomínky a taktéž o zaslání kopie příkazu k úhradě.</p>
-<p>Pokud nebude výše uvedená faktura (faktury) v tomto termínu uhrazena (uhrazeny), budeme nuceni řešit záležitost právní cestou. Tato skutečnost bude představovat navýšení dlužné částky o náklady na právní služby a úrok z prodlení.</p>
-<p>Věříme, že vzhledem k předchozím obchodním vztahům nenecháte tuto kauzu dojít tak daleko a fakturu uhradíte obratem.</p>
+{include 'upominka3_cz_body.phtml'}
+
 <p>S pozdravem<br />
 Prima Air Sea, s.r.o.<br />
 U Prioru 1076/5<br />
@@ -54,35 +27,8 @@ Email: katerina.bartosova@primalogistics.cz<br />
 
 <br />
 
-<p>Dear customer.</p>
-<p>Despite reminders, we have still not received a remittance following invoice(s):</p>
-<table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
-<tr>
-    <th>Invoice number</th>
-    <th>Contract</th>
-    <th>Date of issue</th>
-    <th>Due date</th>
-    <th>Invoiced amount</th>
-    <th>Currency</th>
-    <th>In CZK</th>
-    <th>Total due</th>
-    <th>Overdue days</th>
-</tr>
-<tr n:foreach="$reminder as $row">
-    <td>{$row[cislo_faktury]}&nbsp;</td>
-    <td>{$row[zakazka]}&nbsp;</td>
-    <td>{$row[datum_vystaveni]}&nbsp;</td>
-    <td>{$row[datum_splatnosti]}&nbsp;</td>
-    <td>{$row[fakturovano]|number:2:',':' '}&nbsp;</td>
-    <td>{$row[mena]}&nbsp;</td>
-    <td>{$row[celkem_kc]|number:2:',':' '}&nbsp;</td>
-    <td>{$row[k_likvidaci_kc]|number:2:',':' '}&nbsp;</td>
-    <td>{$row[po_splatnosti]}&nbsp;</td>
-</tr>
-</table>
-<p>We ask you for this outstanding amount to be paid within seven calendar days and to send us copy of the payment order.</p>
-<p>If you do not pay the invoice within stipulated time, we will be forced to recover the amount owed through the courts. In that case you would be charged court and legal services cost and interest.</p>
-<p>We trust, that, with respect to our previous business relations, you do not let this affair to go so far and the invoice is paid promptly.</p>
+{include 'upominka3_en_body.phtml'}
+
 <p>Sincerely<br />
 Prima Air Sea, s.r.o.<br />
 U Prioru 1076/5<br />

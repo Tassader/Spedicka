@@ -1,0 +1,31 @@
+<p>Dear customer.</p>
+<p>Despite reminders, we have still not received a remittance following invoice(s):</p>
+<table border="1" cellspacing="0" cellpadding="4" xstyle="border: 1px solid black">
+<tr>
+    <th>Invoice number</th>
+    <th>Contract</th>
+    <th>Date of issue</th>
+    <th>Due date</th>
+    <th>Invoiced amount</th>
+    <th>Currency</th>
+    <th>In CZK</th>
+    <th>Total due</th>
+    <th>Overdue days</th>
+</tr>
+<tr n:foreach="$reminder as $row">
+    <td>{$row[cislo_faktury]}&nbsp;</td>
+    <td>{$row[zakazka]}&nbsp;</td>
+    <td>{$row[datum_vystaveni]}&nbsp;</td>
+    <td>{$row[datum_splatnosti]}&nbsp;</td>
+    <td>{$row[fakturovano]|number:2:'.':','}&nbsp;</td>
+    <td>{$row[mena]}&nbsp;</td>
+    <td>{$row[celkem_kc]|number:2:'.':','}&nbsp;</td>
+    <td>{$row[k_likvidaci_kc]|number:2:'.':','}&nbsp;</td>
+    <td>{$row[po_splatnosti]}&nbsp;</td>
+</tr>
+</table>
+<p>We ask you for this outstanding amount to be paid within <strong>three calendar days</strong> and for sending us a copy of the payment order.</p>
+<p>At the same time, please pay the default interest as well, at the statutory rate based on Government Order no. 351/2013 Coll., which is the repo rate set by the Czech National Bank for the first day of the calendar half-year in which the default occurred, increased by 8 percentage points.</p>
+<p>Additionaly, don't forget to pay the cost of recovery according to Government Order no. 351/2013 Coll. in the amount of CZK 1,200.&ndash;.</p>
+<p>If you do not pay the invoice, the interest and the recovery costs within the stipulated time, we will be forced to recover the amount owed through the courts. In that case you would be charged court and legal services cost.</p>
+<p>We trust, that, with respect to our previous business relations, you do not let this affair to go so far and the invoice is paid promptly.</p>
