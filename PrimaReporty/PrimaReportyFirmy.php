@@ -24,6 +24,5 @@ SELECT Datum, Uzivatel, Firma, Stare, Nove
                     
 ORDER BY Datum",
                   "report-firmy",  
-                  array("operations@primalogistics.cz", "sales@primalogistics.cz", "hk@primalogistics.cz", "tomas.zadrazil@centrum.cz"),
+                  array("operations@primalogistics.cz", "sales@primalogistics.cz", "hk@primalogistics.cz", "katerina.bartosova@primalogistics.cz"),
                   "xls");
-?>
