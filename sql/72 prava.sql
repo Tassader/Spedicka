@@ -79,7 +79,7 @@ GRANT SELECT, DELETE, INSERT         ON CelniUrad TO prima_spolecne; -- ciselnik
 GRANT SELECT, DELETE, INSERT         ON DruhKusu TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, DELETE, INSERT         ON DruhPrepravy TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
 GRANT SELECT, DELETE, INSERT         ON Firma TO prima_spolecne; -- nejde dát revoke na sloupec
-GRANT                         UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,KategorieCRM,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas,Disponent,PojisteniPlatneDo,PojisteniCastkaCelkem,PojisteniCastka,PojisteniMena,BLAddress,AWBAddress) TO prima_spolecne;
+GRANT                         UPDATE ON Firma (ID,Firma,ICO,Priorita,Prodejce,Kategorie,KategorieCRM,Ulice,Mesto,PSC,Stat,Web,Poznamky,upsize_ts,TextNaObjednavku,DorucovaciAdresa,Zalozil,ZalozilCas,Disponent,PojisteniPlatneDo,PojisteniCastkaCelkem,PojisteniCastka,PojisteniMena,BLAddress,AWBAddress,ProdejceSil,DisponentSil) TO prima_spolecne;
 GRANT SELECT, DELETE, INSERT, UPDATE ON FirmaSOP TO prima_spolecne;
 GRANT SELECT                         ON Historie TO prima_spolecne;
 GRANT SELECT, DELETE, INSERT         ON Incoterms TO prima_spolecne; -- ciselnik => nedovolit menit obyc uzivatelum
@@ -126,6 +126,10 @@ REVOKE UPDATE ON [Firma] ([MenaSil]) TO prima_spolecne;
 
 REVOKE DELETE, INSERT, UPDATE ON Kurzy TO prima_spolecne;
 */
+
+-- sp
+GRANT EXECUTE ON SloucitFirmy TO prima_spolecne;
+GRANT EXECUTE ON SloucitFirmy TO db_datawriter; -- toto nejde, tak možná vytvořit spešl roli jen pro proceduru? zatím jsem dal i man a ucto do prima_spolecne
 GO
 
 -- Overseas
