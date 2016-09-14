@@ -104,6 +104,11 @@ function createReport($query, $templateName, array $email, $attachmentFormat=NUL
     //print($mail->generateMessage()); //toto lze ulozit na P jako *.eml
 }
 
+function query($query){
+    $statement = $this->db->prepare($query);
+    $statement->execute();
+}
+
 /**
  * Check if supplied email address' format is valid
  *
@@ -126,4 +131,3 @@ protected function _reportError($popis, $template=null)
 }
 
 } // Class PrimaUpominky
-//?>
