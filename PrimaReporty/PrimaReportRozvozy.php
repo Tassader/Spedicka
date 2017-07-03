@@ -42,6 +42,6 @@ WHERE p.DruhPrepravy IN (7,8) AND p.Smer='Import'
 AND ETAPrg BETWEEN current_timestamp AND current_timestamp+14 
 ORDER BY ETAPrg",
                   "report-rozvozy",  
-                  array("operations@primalogistics.cz", "hk@primalogistics.cz", "tomas.zadrazil@centrum.cz"),
+                  array("operations@primalogistics.cz", "hk@primalogistics.cz"/*, "tomas.zadrazil@centrum.cz"*/),
                   "xls");
 ?>
